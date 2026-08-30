@@ -40,14 +40,15 @@ class DatabaseSeeder extends Seeder
 
         // Miembro
         $miembro = User::firstOrCreate(
-            ['email' => 'miembro@demo.com'],
+            ['email' => 'miembro@miembro.com'],
             [
                 'name' => 'Miembro Demo',
                 'password' => Hash::make('demo1234'),
                 'activo' => true,
                 'rol' => 'miembro',
             ]
-        );
+        ); 
+        
 
         // Iglesia demo
         $iglesia = Iglesia::firstOrCreate(

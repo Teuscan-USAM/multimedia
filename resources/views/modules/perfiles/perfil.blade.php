@@ -22,11 +22,18 @@
           <div class="text-center mb-4">
             <label for="foto" class="form-label d-block fw-semibold">Foto de perfil</label>
             <div class="position-relative d-inline-block">
-              <img src="{{ $usuario->foto ? asset('fotos_perfil/' . $usuario->foto) : asset('img/default.png') }}"
-                alt="Foto de perfil"
-                class="rounded-circle shadow"
-                style="width: 150px; height: 150px; object-fit: cover; border: 4px solid #0d6efd;">
-
+              @if($usuario->foto)
+                <img src="{{ asset('fotos_perfil/' . $usuario->foto) }}"
+                     alt="Foto de perfil"
+                     class="rounded-circle shadow border border-4 border-primary"
+                     style="width: 150px; height: 150px; object-fit: cover; background: #f5f7fa;"
+                     onerror="this.onerror=null;this.style.display='none';">
+              @else
+                <div class="rounded-circle border border-4 border-primary d-flex align-items-center justify-content-center text-muted bg-light"
+                     style="width: 150px; height: 150px;">
+                  <i class="bi bi-person-circle fs-1"></i>
+                </div>
+              @endif
             </div>
             <input type="file" name="foto" id="foto" class="form-control mt-3">
           </div>
