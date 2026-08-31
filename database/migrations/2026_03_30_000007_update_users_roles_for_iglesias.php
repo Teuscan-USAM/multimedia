@@ -7,11 +7,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Convertimos el enum anterior (admin,cajero,bodeguero) al set nuevo (admin,pastor,miembro).
-        // Nota: esto asume MySQL/MariaDB. En otros motores se debe ajustar.
-        DB::statement("ALTER TABLE users MODIFY rol ENUM('admin','pastor','miembro') NOT NULL DEFAULT 'miembro'");
+        $driver = DB::getDriverName();
 
-        // Re-mapeo básico para no romper usuarios existentes
+        if ($driver === 'pgsql') {
+            // Sintaxis compatible con PostgreSQL
+            DB::statement("ALTER TABLE users ALTER COLUMN rol TYPE VARCHAR(255)");
+            DB::statement("ALTER TABLE users ALTER COLUMN rol SET DEFAULT 'miembro'");
+            DB::statement("ALTER TABLE users ALTER COLUMN rol SET NOT NULL");
+        } else {
+            // Sintaxis para MySQL / MariaDB
+            DB::statement("ALTER TABLE users MODIFY rol ENUM('admin','pastor','miembro') NOT NULL DEFAULT 'miembro'");
+        }
+
+        // Re-mapeo básico para usuarios existentes
         DB::statement("UPDATE users SET rol='miembro' WHERE rol='cajero'");
         DB::statement("UPDATE users SET rol='pastor' WHERE rol='bodeguero'");
     }
@@ -21,4 +29,3 @@ return new class extends Migration
         // Down no implementado para evitar pérdida de compatibilidad
     }
 };
-

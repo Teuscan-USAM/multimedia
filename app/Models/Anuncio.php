@@ -11,6 +11,12 @@ class Anuncio extends Model
     protected $fillable = [
         'titulo',
         'descripcion',
+        'imagen',
         'estado'
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 }

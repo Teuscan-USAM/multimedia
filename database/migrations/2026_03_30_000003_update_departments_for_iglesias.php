@@ -10,19 +10,19 @@ return new class extends Migration
     {
         Schema::table('departments', function (Blueprint $table) {
             if (!Schema::hasColumn('departments', 'iglesia_id')) {
-                $table->foreignId('iglesia_id')->nullable()->after('id')->constrained('iglesias')->nullOnDelete();
+                $table->foreignId('iglesia_id')->nullable()->constrained('iglesias')->nullOnDelete();
             }
             if (!Schema::hasColumn('departments', 'pastor_id')) {
-                $table->foreignId('pastor_id')->nullable()->after('iglesia_id')->constrained('users')->nullOnDelete();
+                $table->foreignId('pastor_id')->nullable()->constrained('users')->nullOnDelete();
             }
             if (!Schema::hasColumn('departments', 'miembro_id')) {
-                $table->foreignId('miembro_id')->nullable()->after('pastor_id')->constrained('users')->nullOnDelete();
+                $table->foreignId('miembro_id')->nullable()->constrained('users')->nullOnDelete();
             }
             if (!Schema::hasColumn('departments', 'nombre')) {
-                $table->string('nombre')->nullable()->after('miembro_id');
+                $table->string('nombre')->nullable();
             }
             if (!Schema::hasColumn('departments', 'descripcion')) {
-                $table->string('descripcion', 500)->nullable()->after('nombre');
+                $table->string('descripcion', 500)->nullable();
             }
         });
     }

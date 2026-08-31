@@ -10,10 +10,10 @@ return new class extends Migration
     {
         Schema::table('categorias', function (Blueprint $table) {
             if (!Schema::hasColumn('categorias', 'iglesia_id')) {
-                $table->foreignId('iglesia_id')->nullable()->after('id')->constrained('iglesias')->nullOnDelete();
+                $table->foreignId('iglesia_id')->nullable()->constrained('iglesias')->nullOnDelete();
             }
             if (!Schema::hasColumn('categorias', 'tipo')) {
-                $table->enum('tipo', ['ingreso', 'egreso'])->default('ingreso')->after('nombre');
+                $table->enum('tipo', ['ingreso', 'egreso'])->default('ingreso');
             }
         });
     }

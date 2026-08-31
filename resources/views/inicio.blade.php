@@ -40,9 +40,12 @@
                              style="height:200px; object-fit:cover;">
                     @endif
 
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ $anuncio->titulo }}</h5>
-                        <p class="card-text">{{ $anuncio->descripcion }}</p>
+                        <p class="card-text flex-grow-1">{{ $anuncio->descripcion }}</p>
+                        <small class="text-muted mt-2">
+                            Publicado: {{ $anuncio->created_at ? $anuncio->created_at->format('d/m/Y') : 'Hoy' }}
+                        </small>
                     </div>
                 </div>
             </div>
