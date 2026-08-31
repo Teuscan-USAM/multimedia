@@ -49,20 +49,32 @@ class Dashboard extends Controller
 
         // Miembro: solo su departamento
         $departamento = Departamento::where('miembro_id', $user->id)->first();
-        $ultimosIngresos = $departamento
-            ? Ingreso::where('departamento_id', $departamento->id)->orderByDesc('fecha')->take(5)->get()
-            : collect();
-        $ultimosEgresos = $departamento
-            ? Egreso::where('departamento_id', $departamento->id)->orderByDesc('fecha')->take(5)->get()
-            : collect();
 
-        $saldo = 0;
         if ($departamento) {
-            $ing = Ingreso::where('departamento_id', $departamento->id)->sum('monto');
-            $egr = Egreso::where('departamento_id', $departamento->id)->sum('monto');
-            $saldo = $ing - $egr;
+            $ingresosPorMes = Ingreso::where('departamento_id', $departamento->id)
+                ->orderBy('fecha')
+                ->get()
+                ->groupBy(fn ($item) => $item->fecha->format('Y-m'));
+
+            $egresosPorMes = Egreso::where('departamento_id', $departamento->id)
+                ->orderBy('fecha')
+                ->get()
+                ->groupBy(fn ($item) => $item->fecha->format('Y-m'));
+
+            $saldo = Ingreso::where('departamento_id', $departamento->id)->sum('monto')
+                - Egreso::where('departamento_id', $departamento->id)->sum('monto');
+        } else {
+            $ingresosPorMes = collect();
+            $egresosPorMes = collect();
+            $saldo = 0;
         }
 
-        return view('modules.dashboard.home', compact('titulo', 'departamento', 'saldo', 'ultimosIngresos', 'ultimosEgresos'));
+        return view('modules.dashboard.home', compact(
+            'titulo',
+            'departamento',
+            'saldo',
+            'ingresosPorMes',
+            'egresosPorMes'
+        ));
     }
 }
