@@ -78,3 +78,6 @@ class Dashboard extends Controller
         ));
     }
 }
+
+
+//Actualmente, el método `index` del controlador `Dashboard` maneja la lógica para mostrar diferentes métricas y datos en el dashboard según el rol del usuario autenticado. Los roles considerados son 'admin', 'pastor' y 'miembro', cada uno con acceso a diferentes niveles de información.
