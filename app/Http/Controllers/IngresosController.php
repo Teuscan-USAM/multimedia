@@ -28,7 +28,6 @@ class IngresosController extends Controller
         $departamento = Departamento::where('miembro_id', Auth::id())->with('iglesia')->firstOrFail();
 
         $categorias = CategoriaFinanza::where('tipo', 'ingreso')
-            ->where('iglesia_id', $departamento->iglesia_id)
             ->orderBy('nombre')
             ->get();
 
@@ -47,13 +46,12 @@ class IngresosController extends Controller
             'fecha' => 'required|date',
         ]);
 
-        // Validar que la categoría pertenezca a la iglesia del departamento y sea de tipo ingreso
+        // Las categorías son globales; el movimiento sigue perteneciendo al departamento.
         $ok = CategoriaFinanza::where('id', $data['categoria_id'])
             ->where('tipo', 'ingreso')
-            ->where('iglesia_id', $departamento->iglesia_id)
             ->exists();
         if (!$ok) {
-            return back()->with('error', 'Categoría inválida para tu iglesia.')->withInput();
+            return back()->with('error', 'Categoría inválida para ingresos.')->withInput();
         }
 
         Ingreso::create([
@@ -76,7 +74,6 @@ class IngresosController extends Controller
 
         $item = Ingreso::where('departamento_id', $departamento->id)->findOrFail($id);
         $categorias = CategoriaFinanza::where('tipo', 'ingreso')
-            ->where('iglesia_id', $departamento->iglesia_id)
             ->orderBy('nombre')
             ->get();
 
@@ -98,10 +95,9 @@ class IngresosController extends Controller
 
         $ok = CategoriaFinanza::where('id', $data['categoria_id'])
             ->where('tipo', 'ingreso')
-            ->where('iglesia_id', $departamento->iglesia_id)
             ->exists();
         if (!$ok) {
-            return back()->with('error', 'Categoría inválida para tu iglesia.')->withInput();
+            return back()->with('error', 'Categoría inválida para ingresos.')->withInput();
         }
 
         $item->update($data);

@@ -28,7 +28,6 @@ class EgresosController extends Controller
         $departamento = Departamento::where('miembro_id', Auth::id())->with('iglesia')->firstOrFail();
 
         $categorias = CategoriaFinanza::where('tipo', 'egreso')
-            ->where('iglesia_id', $departamento->iglesia_id)
             ->orderBy('nombre')
             ->get();
 
@@ -49,10 +48,9 @@ class EgresosController extends Controller
 
         $ok = CategoriaFinanza::where('id', $data['categoria_id'])
             ->where('tipo', 'egreso')
-            ->where('iglesia_id', $departamento->iglesia_id)
             ->exists();
         if (!$ok) {
-            return back()->with('error', 'Categoría inválida para tu iglesia.')->withInput();
+            return back()->with('error', 'Categoría inválida para egresos.')->withInput();
         }
 
         Egreso::create([
@@ -75,7 +73,6 @@ class EgresosController extends Controller
 
         $item = Egreso::where('departamento_id', $departamento->id)->findOrFail($id);
         $categorias = CategoriaFinanza::where('tipo', 'egreso')
-            ->where('iglesia_id', $departamento->iglesia_id)
             ->orderBy('nombre')
             ->get();
 
@@ -97,10 +94,9 @@ class EgresosController extends Controller
 
         $ok = CategoriaFinanza::where('id', $data['categoria_id'])
             ->where('tipo', 'egreso')
-            ->where('iglesia_id', $departamento->iglesia_id)
             ->exists();
         if (!$ok) {
-            return back()->with('error', 'Categoría inválida para tu iglesia.')->withInput();
+            return back()->with('error', 'Categoría inválida para egresos.')->withInput();
         }
 
         $item->update($data);

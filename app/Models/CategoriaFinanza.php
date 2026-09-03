@@ -12,14 +12,8 @@ class CategoriaFinanza extends Model
     protected $table = 'categorias';
 
     protected $fillable = [
-        'iglesia_id',
         'nombre',
         'tipo', // ingreso|egreso
     ];
-
-    public function iglesia()
-    {
-        return $this->belongsTo(Iglesia::class, 'iglesia_id');
-    }
 }
 

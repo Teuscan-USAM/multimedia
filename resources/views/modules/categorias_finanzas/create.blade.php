@@ -18,21 +18,13 @@
 
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label">Iglesia *</label>
-              <select name="iglesia_id" class="form-select" required>
-                @foreach($iglesias as $ig)
-                  <option value="{{ $ig->id }}" @selected(old('iglesia_id')==$ig->id)>{{ $ig->nombre }}</option>
-                @endforeach
-              </select>
-            </div>
-            <div class="col-md-3">
               <label class="form-label">Tipo *</label>
               <select name="tipo" class="form-select" required>
                 <option value="ingreso" @selected(old('tipo')==='ingreso')>Ingreso</option>
                 <option value="egreso" @selected(old('tipo')==='egreso')>Egreso</option>
               </select>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
               <label class="form-label">Nombre *</label>
               <input name="nombre" class="form-control" value="{{ old('nombre') }}" required>
             </div>

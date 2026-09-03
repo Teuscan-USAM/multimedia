@@ -12,7 +12,7 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mt-3">
-          <h5 class="card-title mb-0">Listado de categorias por iglesia</h5>
+          <h5 class="card-title mb-0">Catálogo general de categorías</h5>
           <a class="btn btn-primary" href="{{ route('categorias.create') }}">
             <i class="bi bi-plus"></i> Nueva categoría
           </a>
@@ -22,7 +22,6 @@
           <table class="table table-striped datatable">
             <thead>
               <tr>
-                <th>Iglesia</th>
                 <th>Tipo</th>
                 <th>Nombre</th>
                 <th class="text-end">Acciones</th>
@@ -31,7 +30,6 @@
             <tbody>
               @foreach($items as $it)
                 <tr>
-                  <td>{{ $it->iglesia?->nombre }}</td>
                   <td>{{ ucfirst($it->tipo) }}</td>
                   <td>{{ $it->nombre }}</td>
                   <td class="text-end">
