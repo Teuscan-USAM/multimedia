@@ -55,4 +55,4 @@ COPY .docker/nginx.conf /etc/nginx/sites-available/default
 
 EXPOSE 80
 
-CMD ["sh", "-c", "nginx -g 'daemon off;' & exec php-fpm"]
+CMD ["sh", "-c", "php artisan migrate --force && sed -i \"s/listen 80;/listen ${PORT:-80};/\" /etc/nginx/sites-available/default && php-fpm -D && exec nginx -g 'daemon off;'"]
