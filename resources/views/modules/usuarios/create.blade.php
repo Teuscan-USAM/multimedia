@@ -30,8 +30,8 @@
               <select name="rol" id="rol" class="form-select" required>
                 <option value="">Selecciona el rol</option>
                 <option value="admin">Admin</option>
-                <option value="cajero">Cajero</option>
-                <option value="bodeguero">Bodeguero</option>
+                <option value="pastor">Pastor</option>
+                <option value="miembro">Miembro</option>
               </select>
 
               <button class="btn btn-primary mt-3">Guardar</button>

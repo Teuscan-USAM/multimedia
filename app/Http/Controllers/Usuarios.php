@@ -38,7 +38,7 @@ class Usuarios extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
-            'rol' => 'required|in:admin,cajero,bodeguero',
+            'rol' => 'required|in:admin,pastor,miembro',
         ]);
 
         try {
@@ -74,7 +74,7 @@ class Usuarios extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => "required|email|unique:users,email,$id",
-            'rol' => 'required|in:admin,cajero,bodeguero',
+            'rol' => 'required|in:admin,pastor,miembro',
         ]);
 
         try {

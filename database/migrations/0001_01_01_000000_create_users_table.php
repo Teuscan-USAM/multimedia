@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('activo')->default(true);
-            $table->enum('rol', ['admin', 'cajero', 'bodeguero'])->default('cajero'); // 👈 se agrega bodeguero
+            $table->enum('rol', ['admin', 'pastor', 'miembro'])->default('miembro');
             $table->string('foto')->nullable(); // 👈 se agrega campo para foto de perfil
             $table->rememberToken();
             $table->timestamps();

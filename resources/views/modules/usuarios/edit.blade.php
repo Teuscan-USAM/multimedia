@@ -29,8 +29,8 @@
               <select name="rol" id="rol" class="form-select" required>
                 <option value="">Selecciona el rol</option>
                 <option value="admin" {{ $item->rol == 'admin' ? 'selected' : '' }}>Admin</option>
-                <option value="cajero" {{ $item->rol == 'cajero' ? 'selected' : '' }}>Cajero</option>
-                <option value="bodeguero" {{ $item->rol == 'bodeguero' ? 'selected' : '' }}>Bodeguero</option>
+                <option value="pastor" {{ $item->rol == 'pastor' ? 'selected' : '' }}>Pastor</option>
+                <option value="miembro" {{ $item->rol == 'miembro' ? 'selected' : '' }}>Miembro</option>
               </select>
 
               <button class="btn btn-warning mt-3">Actualizar</button>

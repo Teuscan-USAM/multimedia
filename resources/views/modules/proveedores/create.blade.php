@@ -47,10 +47,10 @@
                       <td>
                         @if($usuario->rol == 'admin')
                           <span class="badge bg-danger">Admin</span>
-                        @elseif($usuario->rol == 'cajero')
-                          <span class="badge bg-success">Cajero</span>
-                        @elseif($usuario->rol == 'bodeguero')
-                          <span class="badge bg-warning text-dark">Bodeguero</span>
+                        @elseif($usuario->rol == 'pastor')
+                          <span class="badge bg-success">Pastor</span>
+                        @elseif($usuario->rol == 'miembro')
+                          <span class="badge bg-warning text-dark">Miembro</span>
                         @else
                           <span class="badge bg-secondary">Sin rol</span>
                         @endif
