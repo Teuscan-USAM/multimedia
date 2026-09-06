@@ -26,7 +26,7 @@
             <thead>
               <tr>
                 <th>Fecha</th>
-                <th>Nombre</th>
+                <th>Concepto</th>
                 <th>Categoría</th>
                 <th class="text-end">Monto</th>
                 <th class="text-end">Acciones</th>

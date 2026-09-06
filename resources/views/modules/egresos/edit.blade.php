@@ -32,14 +32,15 @@
             </div>
             <div class="col-md-4">
               <label class="form-label">Monto *</label>
-              <input name="monto" type="number" step="0.01" class="form-control" value="{{ old('monto', $item->monto) }}" required>
+              <input name="monto" type="number" min="0.01" max="9999999999.99" step="0.01" inputmode="decimal" class="form-control" value="{{ old('monto', $item->monto) }}" placeholder="Ejemplo: 1250.50" required>
+              <div class="form-text">Solo números. Usa hasta dos decimales, por ejemplo: 1250.50.</div>
             </div>
             <div class="col-12">
-              <label class="form-label">Nombre *</label>
+              <label class="form-label">Concepto *</label>
               <input name="nombre" class="form-control" value="{{ old('nombre', $item->nombre) }}" required>
             </div>
             <div class="col-12">
-              <label class="form-label">Descripción</label>
+              <label class="form-label">Notas</label>
               <input name="descripcion" class="form-control" value="{{ old('descripcion', $item->descripcion) }}">
             </div>
           </div>

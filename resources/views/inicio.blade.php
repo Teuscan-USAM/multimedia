@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Noticias, anuncios y momentos de nuestra iglesia.">
-  <title>Comunidad TEO | Anuncios</title>
+  <title>Sistema SIAD | Anuncios</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -92,7 +92,7 @@
 <body>
   <header class="site-header">
     <nav class="nav-wrap" aria-label="Navegación principal">
-      <a class="brand" href="{{ route('inicio') }}"><span class="brand-mark">T</span><span>COMUNIDAD TEO</span></a>
+      <a class="brand" href="{{ route('inicio') }}"><span class="brand-mark">AD</span><span>ASAMBLEAS DE DIOS DE EL SALVADOR</span></a>
       <a class="login-link" href="{{ route('login') }}">Iniciar sesión</a>
     </nav>
     <div class="hero">
@@ -137,7 +137,7 @@
       <aside class="promo" aria-labelledby="promo-title"><span class="eyebrow">Invitación abierta</span><h2 id="promo-title">Tu historia también forma parte.</h2><p>Un rincón para anunciar actividades, invitar a nuevos encuentros y celebrar lo que vivimos juntos.</p><div class="promo-rule"></div><small>Comunidad · Fe · Esperanza</small></aside>
     </div>
   </main>
-  <footer class="site-footer"><strong>COMUNIDAD TEO</strong><span>Un espacio para mantenernos cerca.</span></footer>
+  <footer class="site-footer"><strong>SISTEMA DE LAS ASAMBLEAS DE DIOS DE EL SALVADOR</strong><span>Un espacio para mantenernos cerca.</span></footer>
   <script>
     (() => {
       const track = document.querySelector('.carousel-track');

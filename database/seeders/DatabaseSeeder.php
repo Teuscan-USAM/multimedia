@@ -77,19 +77,19 @@ class DatabaseSeeder extends Seeder
         // Categorías financieras globales para todas las iglesias
         CategoriaFinanza::firstOrCreate(
             ['tipo' => 'ingreso', 'nombre' => 'Ofrenda'],
-            ['iglesia_id' => null]
+            []
         );
         CategoriaFinanza::firstOrCreate(
             ['tipo' => 'ingreso', 'nombre' => 'Diezmo'],
-            ['iglesia_id' => null]
+            []
         );
         CategoriaFinanza::firstOrCreate(
             ['tipo' => 'egreso', 'nombre' => 'Materiales'],
-            ['iglesia_id' => null]
+            []
         );
         CategoriaFinanza::firstOrCreate(
             ['tipo' => 'egreso', 'nombre' => 'Transporte'],
-            ['iglesia_id' => null]
+            []
         );
     }
 }

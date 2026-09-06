@@ -37,6 +37,11 @@
               <label class="form-label">Dirección</label>
               <input name="direccion" class="form-control" value="{{ old('direccion') }}">
             </div>
+            <div class="col-12">
+              <label class="form-label">Dirección de Google Maps</label>
+              <input type="url" name="direccion_google_maps" class="form-control" value="{{ old('direccion_google_maps') }}" placeholder="Pega aquí el enlace de Google Maps">
+              <div class="form-text">Pega el enlace de ubicación de Google Maps.</div>
+            </div>
           </div>
 
           @if($errors->any())

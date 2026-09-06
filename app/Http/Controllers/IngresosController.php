@@ -42,7 +42,7 @@ class IngresosController extends Controller
             'categoria_id' => 'required|integer|exists:categorias,id',
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:500',
-            'monto' => 'required|numeric|min:0.01',
+            'monto' => 'required|numeric|min:0.01|max:9999999999.99|decimal:0,2',
             'fecha' => 'required|date',
         ]);
 
@@ -89,7 +89,7 @@ class IngresosController extends Controller
             'categoria_id' => 'required|integer|exists:categorias,id',
             'nombre' => 'required|string|max:255',
             'descripcion' => 'nullable|string|max:500',
-            'monto' => 'required|numeric|min:0.01',
+            'monto' => 'required|numeric|min:0.01|max:9999999999.99|decimal:0,2',
             'fecha' => 'required|date',
         ]);
 

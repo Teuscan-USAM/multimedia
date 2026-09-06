@@ -71,6 +71,26 @@
             <a class="btn btn-secondary" href="{{ route('usuarios.index') }}">Volver</a>
           </div>
         </form>
+
+        <hr class="my-4">
+
+        <h5 class="card-title">Restablecer contraseña</h5>
+        <form method="POST" action="{{ route('usuarios.reset-password', $item->id) }}">
+          @csrf
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nueva contraseña *</label>
+              <input name="password" type="password" class="form-control" minlength="6" placeholder="Mínimo 6 caracteres" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Confirmar contraseña *</label>
+              <input name="password_confirmation" type="password" class="form-control" minlength="6" placeholder="Repite la nueva contraseña" required>
+            </div>
+          </div>
+
+          <button class="btn btn-outline-warning mt-3" type="submit">Restablecer contraseña</button>
+        </form>
       </div>
     </div>
   </section>

@@ -28,6 +28,7 @@ class IglesiasController extends Controller
             'telefono' => 'nullable|string|max:50',
             'ciudad' => 'nullable|string|max:100',
             'responsable' => 'nullable|string|max:255',
+            'direccion_google_maps' => 'nullable|url|max:2048',
         ]);
 
         Iglesia::create($data);
@@ -50,6 +51,7 @@ class IglesiasController extends Controller
             'telefono' => 'nullable|string|max:50',
             'ciudad' => 'nullable|string|max:100',
             'responsable' => 'nullable|string|max:255',
+            'direccion_google_maps' => 'nullable|url|max:2048',
         ]);
 
         $item->update($data);

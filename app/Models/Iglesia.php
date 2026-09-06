@@ -17,6 +17,7 @@ class Iglesia extends Model
         'telefono',
         'ciudad',
         'responsable',
+        'direccion_google_maps',
     ];
 
     public function pastores()

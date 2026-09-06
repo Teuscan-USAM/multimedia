@@ -84,6 +84,21 @@ class UsuariosController extends Controller
         return to_route('usuarios.index')->with('success', 'Usuario actualizado con éxito.');
     }
 
+    public function resetPassword(Request $request, string $id)
+    {
+        $data = $request->validate([
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $item = User::findOrFail($id);
+        $item->update([
+            'password' => Hash::make($data['password']),
+        ]);
+
+        return to_route('usuarios.edit', $item->id)
+            ->with('success', 'Contraseña restablecida con éxito.');
+    }
+
     public function estado($id, $estado)
     {
         $item = User::findOrFail($id);

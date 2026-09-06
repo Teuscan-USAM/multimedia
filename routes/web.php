@@ -55,6 +55,7 @@ Route::middleware(['auth', 'Checkrol:admin'])->group(function () {
         Route::post('/store', [UsuariosController::class, 'store'])->name('usuarios.store');
         Route::get('/edit/{id}', [UsuariosController::class, 'edit'])->name('usuarios.edit');
         Route::put('/update/{id}', [UsuariosController::class, 'update'])->name('usuarios.update');
+        Route::post('/reset-password/{id}', [UsuariosController::class, 'resetPassword'])->name('usuarios.reset-password');
         Route::get('/cambiar-estado/{id}/{estado}', [UsuariosController::class, 'estado'])->name('usuarios.estado');
         Route::post('/asignar-iglesias/{id}', [UsuariosController::class, 'asignarIglesias'])->name('usuarios.asignar.iglesias');
     });
