@@ -8,6 +8,13 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // Render puede conservar tablas de una instalación anterior aunque la
+        // tabla `migrations` no tenga registrada esta migración consolidada.
+        if (Schema::hasTable('users')) {
+            $this->adoptExistingSchema();
+            return;
+        }
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -150,6 +157,29 @@ return new class extends Migration
             $table->boolean('estado')->default(true);
             $table->timestamps();
         });
+    }
+
+    private function adoptExistingSchema(): void
+    {
+        if (Schema::hasTable('iglesias') && !Schema::hasColumn('iglesias', 'direccion_google_maps')) {
+            Schema::table('iglesias', function (Blueprint $table) {
+                $table->string('direccion_google_maps', 2048)->nullable();
+            });
+        }
+
+        if (Schema::hasTable('anuncios')) {
+            Schema::table('anuncios', function (Blueprint $table) {
+                if (!Schema::hasColumn('anuncios', 'titulo')) {
+                    $table->string('titulo')->nullable();
+                }
+                if (!Schema::hasColumn('anuncios', 'descripcion')) {
+                    $table->text('descripcion')->nullable();
+                }
+                if (!Schema::hasColumn('anuncios', 'imagen')) {
+                    $table->string('imagen')->nullable();
+                }
+            });
+        }
     }
 
     public function down(): void
