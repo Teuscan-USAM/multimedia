@@ -11,6 +11,7 @@ use App\Http\Controllers\DepartamentosController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\IngresosController;
 use App\Http\Controllers\EgresosController;
+use App\Http\Controllers\ReportesController;
 use Illuminate\Support\Facades\Route;
 
 // Crear un usuario admin (solo usar una vez en un entorno nuevo)
@@ -33,6 +34,9 @@ Route::middleware('auth')->group(function () {
     // 👤 Perfil del usuario autenticado
     Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil');
     Route::post('/perfil/update', [PerfilController::class, 'update'])->name('perfil.update');
+
+    // 👥 Reportes
+    Route::get('/reportes', [ReportesController::class, 'index'])->name('reportes.index');
 });
 
 // =====================================================

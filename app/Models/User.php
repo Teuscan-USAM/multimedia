@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'activo',
         'rol',
+        'iglesia_id',
         'foto' // 👈 importante
     ];
 
@@ -53,5 +54,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Iglesia::class, 'iglesia_pastor', 'pastor_id', 'iglesia_id')
             ->withTimestamps();
+    }
+
+    public function iglesia()
+    {
+        return $this->belongsTo(Iglesia::class, 'iglesia_id');
     }
 }

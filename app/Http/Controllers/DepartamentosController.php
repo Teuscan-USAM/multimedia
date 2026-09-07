@@ -27,10 +27,15 @@ class DepartamentosController extends Controller
     public function edit(string $id)
     {
         $titulo = 'Asignar departamento';
-        $item = $this->departamentoDelPastor($id);
-        $miembros = User::where('rol', 'miembro')->where('activo', true)->orderBy('name')->get();
+        $item = $this->departamentoDelPastor($id)->load('iglesia.pastorResponsable');
+        $miembros = User::where('rol', 'miembro')
+            ->where('activo', true)
+            ->where('iglesia_id', $item->iglesia_id)
+            ->orderBy('name')
+            ->get();
+        $pastorResponsable = $item->iglesia?->pastorResponsable;
 
-        return view('modules.departamentos.edit', compact('titulo', 'item', 'miembros'));
+        return view('modules.departamentos.edit', compact('titulo', 'item', 'miembros', 'pastorResponsable'));
     }
 
     public function update(Request $request, string $id)
@@ -43,12 +48,21 @@ class DepartamentosController extends Controller
 
         $miembroId = $data['miembro_id'] ?? null;
         if ($miembroId) {
-            User::where('rol', 'miembro')->findOrFail($miembroId);
+            $miembro = User::where('rol', 'miembro')
+                ->where('iglesia_id', $item->iglesia_id)
+                ->findOrFail($miembroId);
+            $pastorResponsable = $item->iglesia()->with('pastorResponsable')->first()?->pastorResponsable;
+
+            if (! $pastorResponsable) {
+                return back()->withErrors([
+                    'miembro_id' => 'La iglesia no tiene un pastor responsable configurado.',
+                ])->withInput();
+            }
         }
 
         $item->update([
             'miembro_id' => $miembroId,
-            'pastor_id' => Auth::id(),
+            'pastor_id' => $miembroId ? $pastorResponsable->id : null,
         ]);
 
         return to_route('departamentos.index')->with('success', 'Asignación actualizada con éxito.');
@@ -61,9 +75,19 @@ class DepartamentosController extends Controller
             'miembro_id' => 'required|integer|exists:users,id',
         ]);
 
-        $miembro = User::where('rol', 'miembro')->findOrFail($data['miembro_id']);
+        $miembro = User::where('rol', 'miembro')
+            ->where('iglesia_id', $item->iglesia_id)
+            ->findOrFail($data['miembro_id']);
+        $pastorResponsable = $item->iglesia()->with('pastorResponsable')->first()?->pastorResponsable;
+
+        if (! $pastorResponsable) {
+            return back()->withErrors([
+                'miembro_id' => 'La iglesia no tiene un pastor responsable configurado.',
+            ])->withInput();
+        }
+
         $item->miembro_id = $miembro->id;
-        $item->pastor_id = Auth::id();
+        $item->pastor_id = $pastorResponsable->id;
         $item->save();
 
         return back()->with('success', 'Miembro asignado con éxito.');
