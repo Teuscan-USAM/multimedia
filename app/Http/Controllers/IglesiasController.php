@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Departamento;
 use App\Models\DepartamentoCatalogo;
 use App\Models\Iglesia;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class IglesiasController extends Controller
@@ -20,8 +21,9 @@ class IglesiasController extends Controller
     {
         $titulo = 'Crear iglesia';
         $catalogo = DepartamentoCatalogo::orderBy('nombre')->get();
+        $pastores = User::where('rol', 'pastor')->where('activo', true)->orderBy('name')->get();
         $habilitados = old('catalogo_ids', []);
-        return view('modules.iglesias.create', compact('titulo', 'catalogo', 'habilitados'));
+        return view('modules.iglesias.create', compact('titulo', 'catalogo', 'habilitados', 'pastores'));
     }
 
     public function store(Request $request)
@@ -32,12 +34,14 @@ class IglesiasController extends Controller
             'telefono' => 'nullable|string|max:50',
             'ciudad' => 'nullable|string|max:100',
             'responsable' => 'nullable|string|max:255',
+            'pastor_id' => 'nullable|integer|exists:users,id',
             'direccion_google_maps' => 'nullable|url|max:2048',
             'catalogo_ids' => 'nullable|array',
             'catalogo_ids.*' => 'integer|exists:departamento_catalogo,id',
         ]);
 
         $iglesia = Iglesia::create(collect($data)->except('catalogo_ids')->all());
+        $this->syncPastorResponsable($iglesia, $data['pastor_id'] ?? null);
         Departamento::syncHabilitadosParaIglesia($iglesia, $data['catalogo_ids'] ?? []);
         return to_route('iglesias.index')->with('success', 'Iglesia creada con éxito.');
     }
@@ -47,11 +51,12 @@ class IglesiasController extends Controller
         $titulo = 'Editar iglesia';
         $item = Iglesia::findOrFail($id);
         $catalogo = DepartamentoCatalogo::orderBy('nombre')->get();
+        $pastores = User::where('rol', 'pastor')->where('activo', true)->orderBy('name')->get();
         $habilitados = old(
             'catalogo_ids',
             $item->departamentos()->habilitados()->pluck('catalogo_id')->all()
         );
-        return view('modules.iglesias.edit', compact('titulo', 'item', 'catalogo', 'habilitados'));
+        return view('modules.iglesias.edit', compact('titulo', 'item', 'catalogo', 'habilitados', 'pastores'));
     }
 
     public function update(Request $request, string $id)
@@ -63,12 +68,14 @@ class IglesiasController extends Controller
             'telefono' => 'nullable|string|max:50',
             'ciudad' => 'nullable|string|max:100',
             'responsable' => 'nullable|string|max:255',
+            'pastor_id' => 'nullable|integer|exists:users,id',
             'direccion_google_maps' => 'nullable|url|max:2048',
             'catalogo_ids' => 'nullable|array',
             'catalogo_ids.*' => 'integer|exists:departamento_catalogo,id',
         ]);
 
         $item->update(collect($data)->except('catalogo_ids')->all());
+        $this->syncPastorResponsable($item, $data['pastor_id'] ?? null);
         Departamento::syncHabilitadosParaIglesia($item, $data['catalogo_ids'] ?? []);
         return to_route('iglesias.index')->with('success', 'Iglesia actualizada con éxito.');
     }
@@ -78,6 +85,16 @@ class IglesiasController extends Controller
         $item = Iglesia::findOrFail($id);
         $item->delete();
         return to_route('iglesias.index')->with('success', 'Iglesia eliminada con éxito.');
+    }
+
+    private function syncPastorResponsable(Iglesia $iglesia, ?int $pastorId): void
+    {
+        if ($pastorId) {
+            User::where('id', $pastorId)->where('rol', 'pastor')->firstOrFail();
+            $iglesia->pastores()->syncWithoutDetaching([$pastorId]);
+        }
+
+        $iglesia->update(['pastor_id' => $pastorId]);
     }
 }
 

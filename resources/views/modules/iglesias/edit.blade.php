@@ -34,6 +34,15 @@
               <label class="form-label">Responsable</label>
               <input name="responsable" class="form-control" value="{{ old('responsable', $item->responsable) }}">
             </div>
+            <div class="col-md-6">
+              <label class="form-label">Pastor responsable</label>
+              <select name="pastor_id" class="form-select">
+                <option value="">Sin pastor responsable</option>
+                @foreach($pastores as $pastor)
+                  <option value="{{ $pastor->id }}" @selected(old('pastor_id', $item->pastor_id) == $pastor->id)>{{ $pastor->name }} ({{ $pastor->email }})</option>
+                @endforeach
+              </select>
+            </div>
             <div class="col-12">
               <label class="form-label">Dirección</label>
               <input name="direccion" class="form-control" value="{{ old('direccion', $item->direccion) }}">

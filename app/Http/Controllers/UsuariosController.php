@@ -30,6 +30,7 @@ class UsuariosController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
             'rol' => 'required|in:admin,pastor,miembro',
+            'iglesia_id' => 'required_if:rol,miembro|nullable|integer|exists:iglesias,id',
             'iglesias' => 'array',
             'iglesias.*' => 'integer|exists:iglesias,id',
         ]);
@@ -40,6 +41,7 @@ class UsuariosController extends Controller
             'password' => Hash::make($data['password']),
             'activo' => true,
             'rol' => $data['rol'],
+            'iglesia_id' => $data['rol'] === 'miembro' ? $data['iglesia_id'] : null,
         ]);
 
         if ($user->rol === 'pastor' && !empty($data['iglesias'])) {
@@ -65,6 +67,7 @@ class UsuariosController extends Controller
             'name' => 'required|string|max:255',
             'email' => "required|email|unique:users,email,$id",
             'rol' => 'required|in:admin,pastor,miembro',
+            'iglesia_id' => 'required_if:rol,miembro|nullable|integer|exists:iglesias,id',
             'iglesias' => 'array',
             'iglesias.*' => 'integer|exists:iglesias,id',
         ]);
@@ -73,6 +76,7 @@ class UsuariosController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'rol' => $data['rol'],
+            'iglesia_id' => $data['rol'] === 'miembro' ? $data['iglesia_id'] : null,
         ]);
 
         if ($item->rol === 'pastor') {

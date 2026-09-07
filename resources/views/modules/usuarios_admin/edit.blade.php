@@ -44,6 +44,15 @@
                 @endif
               </div>
             </div>
+            <div class="col-md-6" id="iglesia-miembro-group">
+              <label class="form-label">Iglesia *</label>
+              <select name="iglesia_id" id="iglesia_id" class="form-select">
+                <option value="">Seleccionar iglesia</option>
+                @foreach($iglesias as $ig)
+                  <option value="{{ $ig->id }}" @selected(old('iglesia_id', $item->iglesia_id) == $ig->id)>{{ $ig->nombre }}</option>
+                @endforeach
+              </select>
+            </div>
             <div class="col-12">
               <label class="form-label">Asignar iglesias (solo Pastor)</label>
               <select name="iglesias[]" class="form-select" multiple>
@@ -96,4 +105,22 @@
   </section>
 </main>
 @endsection
+
+@push('scripts')
+<script>
+  const rol = document.querySelector('select[name="rol"]');
+  const iglesiaGroup = document.getElementById('iglesia-miembro-group');
+  const iglesia = document.getElementById('iglesia_id');
+
+  function actualizarIglesia() {
+    const esMiembro = rol.value === 'miembro';
+    iglesiaGroup.hidden = !esMiembro;
+    iglesia.required = esMiembro;
+    if (!esMiembro) iglesia.value = '';
+  }
+
+  rol.addEventListener('change', actualizarIglesia);
+  actualizarIglesia();
+</script>
+@endpush
 

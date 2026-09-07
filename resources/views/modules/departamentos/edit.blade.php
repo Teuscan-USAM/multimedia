@@ -27,6 +27,17 @@
               <input class="form-control" value="{{ $item->iglesia?->nombre }}" disabled>
             </div>
             <div class="col-12">
+              @if($pastorResponsable)
+                <div class="alert alert-info mb-0">
+                  Pastor responsable: <strong>{{ $pastorResponsable->name }}</strong>
+                </div>
+              @else
+                <div class="alert alert-warning mb-0">
+                  La iglesia no tiene pastor responsable configurado. No se puede asignar un miembro todavía.
+                </div>
+              @endif
+            </div>
+            <div class="col-12">
               <label class="form-label">Asignar miembro (opcional)</label>
               <select name="miembro_id" class="form-select">
                 <option value="">Sin asignar</option>

@@ -75,6 +75,12 @@
                 @endif
             </ul>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('reportes.index') }}">
+                <i class="fa-solid fa-chart-line"></i><span>Reportes</span>
+            </a>
+        </li>
         @endcan
 
     </ul>

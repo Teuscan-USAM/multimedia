@@ -17,6 +17,7 @@ class Iglesia extends Model
         'telefono',
         'ciudad',
         'responsable',
+        'pastor_id',
         'direccion_google_maps',
     ];
 
@@ -24,6 +25,11 @@ class Iglesia extends Model
     {
         return $this->belongsToMany(User::class, 'iglesia_pastor', 'iglesia_id', 'pastor_id')
             ->withTimestamps();
+    }
+
+    public function pastorResponsable()
+    {
+        return $this->belongsTo(User::class, 'pastor_id');
     }
 
     public function departamentos()
