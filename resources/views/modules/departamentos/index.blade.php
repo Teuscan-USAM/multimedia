@@ -12,11 +12,9 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mt-3">
-          <h5 class="card-title mb-0">Mis departamentos</h5>
-          <a class="btn btn-primary" href="{{ route('departamentos.create') }}">
-            <i class="bi bi-plus"></i> Nuevo departamento
-          </a>
+          <h5 class="card-title mb-0">Departamentos habilitados</h5>
         </div>
+        <p class="text-muted">El administrador habilita el catálogo por iglesia. Aquí solo puedes asignar un miembro.</p>
 
         <div class="table-responsive">
           <table class="table table-striped datatable">
@@ -35,12 +33,7 @@
                   <td>{{ $it->iglesia?->nombre }}</td>
                   <td>{{ $it->miembro?->name ?? 'Sin asignar' }}</td>
                   <td class="text-end">
-                    <a class="btn btn-sm btn-warning" href="{{ route('departamentos.edit', $it->id) }}">Editar</a>
-                    <form class="d-inline" method="POST" action="{{ route('departamentos.destroy', $it->id) }}" onsubmit="return confirm('¿Eliminar este departamento?');">
-                      @csrf
-                      @method('DELETE')
-                      <button class="btn btn-sm btn-danger" type="submit">Eliminar</button>
-                    </form>
+                    <a class="btn btn-sm btn-warning" href="{{ route('departamentos.edit', $it->id) }}">Asignar</a>
                   </td>
                 </tr>
               @endforeach
@@ -52,4 +45,3 @@
   </section>
 </main>
 @endsection
-

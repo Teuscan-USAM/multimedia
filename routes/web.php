@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\IglesiasController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\CatalogoDepartamentosController;
 use App\Http\Controllers\DepartamentosController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\IngresosController;
@@ -59,31 +60,43 @@ Route::middleware(['auth', 'Checkrol:admin'])->group(function () {
         Route::get('/cambiar-estado/{id}/{estado}', [UsuariosController::class, 'estado'])->name('usuarios.estado');
         Route::post('/asignar-iglesias/{id}', [UsuariosController::class, 'asignarIglesias'])->name('usuarios.asignar.iglesias');
     });
+
+    Route::prefix('catalogo-departamentos')->group(function () {
+        Route::get('/', [CatalogoDepartamentosController::class, 'index'])->name('catalogo-departamentos.index');
+        Route::get('/create', [CatalogoDepartamentosController::class, 'create'])->name('catalogo-departamentos.create');
+        Route::post('/store', [CatalogoDepartamentosController::class, 'store'])->name('catalogo-departamentos.store');
+        Route::get('/habilitaciones', [CatalogoDepartamentosController::class, 'habilitaciones'])->name('catalogo-departamentos.habilitaciones');
+        Route::post('/habilitaciones', [CatalogoDepartamentosController::class, 'guardarHabilitaciones'])->name('catalogo-departamentos.habilitaciones.guardar');
+        Route::get('/edit/{id}', [CatalogoDepartamentosController::class, 'edit'])->name('catalogo-departamentos.edit');
+        Route::put('/update/{id}', [CatalogoDepartamentosController::class, 'update'])->name('catalogo-departamentos.update');
+        Route::delete('/destroy/{id}', [CatalogoDepartamentosController::class, 'destroy'])->name('catalogo-departamentos.destroy');
+    });
 });
 
 Route::middleware(['auth', 'Checkrol:pastor'])->group(function () {
     // Departamentos (pastor)
     Route::prefix('departamentos')->group(function () {
         Route::get('/', [DepartamentosController::class, 'index'])->name('departamentos.index');
-        Route::get('/create', [DepartamentosController::class, 'create'])->name('departamentos.create');
-        Route::post('/store', [DepartamentosController::class, 'store'])->name('departamentos.store');
         Route::get('/edit/{id}', [DepartamentosController::class, 'edit'])->name('departamentos.edit');
         Route::put('/update/{id}', [DepartamentosController::class, 'update'])->name('departamentos.update');
-        Route::delete('/destroy/{id}', [DepartamentosController::class, 'destroy'])->name('departamentos.destroy');
         Route::post('/asignar-miembro/{id}', [DepartamentosController::class, 'asignarMiembro'])->name('departamentos.asignar.miembro');
     });
 });
 
 Route::middleware(['auth', 'Checkrol:admin,pastor'])->group(function () {
-    // Categorías (admin/pastor) — por iglesia, con tipo ingreso/egreso
+    // Categorías (admin/pastor): consulta y administración existente
     Route::prefix('categorias')->group(function () {
         Route::get('/', [CategoriasController::class, 'index'])->name('categorias.index');
-        Route::get('/create', [CategoriasController::class, 'create'])->name('categorias.create');
-        Route::post('/store', [CategoriasController::class, 'store'])->name('categorias.store');
         Route::get('/edit/{id}', [CategoriasController::class, 'edit'])->name('categorias.edit');
         Route::put('/update/{id}', [CategoriasController::class, 'update'])->name('categorias.update');
         Route::delete('/destroy/{id}', [CategoriasController::class, 'destroy'])->name('categorias.destroy');
     });
+});
+
+Route::middleware(['auth', 'Checkrol:admin'])->group(function () {
+    // Solo el administrador puede crear categorías de ingresos y egresos.
+    Route::get('/categorias/create', [CategoriasController::class, 'create'])->name('categorias.create');
+    Route::post('/categorias/store', [CategoriasController::class, 'store'])->name('categorias.store');
 });
 
 Route::middleware(['auth', 'Checkrol:miembro'])->group(function () {

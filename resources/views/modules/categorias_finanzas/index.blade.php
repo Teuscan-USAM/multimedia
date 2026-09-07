@@ -13,9 +13,11 @@
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mt-3">
           <h5 class="card-title mb-0">Catálogo general de categorías</h5>
-          <a class="btn btn-primary" href="{{ route('categorias.create') }}">
-            <i class="bi bi-plus"></i> Nueva categoría
-          </a>
+          @if(auth()->user()->rol === 'admin')
+            <a class="btn btn-primary" href="{{ route('categorias.create') }}">
+              <i class="bi bi-plus"></i> Nueva categoría
+            </a>
+          @endif
         </div>
 
         <div class="table-responsive">
@@ -30,7 +32,11 @@
             <tbody>
               @foreach($items as $it)
                 <tr>
-                  <td>{{ ucfirst($it->tipo) }}</td>
+                  <td>
+                    <span class="badge {{ $it->tipo === 'ingreso' ? 'bg-success' : 'bg-danger' }}">
+                      {{ ucfirst($it->tipo) }}
+                    </span>
+                  </td>
                   <td>{{ $it->nombre }}</td>
                   <td class="text-end">
                     <a class="btn btn-sm btn-warning" href="{{ route('categorias.edit', $it->id) }}">Editar</a>

@@ -30,5 +30,17 @@ class Iglesia extends Model
     {
         return $this->hasMany(Departamento::class, 'iglesia_id');
     }
+
+    public function departamentosHabilitados()
+    {
+        return $this->hasMany(Departamento::class, 'iglesia_id')->habilitados();
+    }
+
+    public function catalogoDepartamentos()
+    {
+        return $this->belongsToMany(DepartamentoCatalogo::class, 'departments', 'iglesia_id', 'catalogo_id')
+            ->withPivot(['habilitado', 'pastor_id', 'miembro_id'])
+            ->withTimestamps();
+    }
 }
 

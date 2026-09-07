@@ -32,7 +32,7 @@
             <div class="col-md-4">
               <label class="form-label">Monto *</label>
               <input name="monto" type="number" min="0.01" max="9999999999.99" step="0.01" inputmode="decimal" class="form-control" value="{{ old('monto') }}" placeholder="Ejemplo: 1250.50" required>
-              <div class="form-text">Solo números. Usa hasta dos decimales, por ejemplo: 1250.50.</div>
+              <div class="form-text">Solo números. Usa hasta dos decimales, por ejemplo: 00.00</div>
             </div>
             <div class="col-12">
               <label class="form-label">Concepto *</label>

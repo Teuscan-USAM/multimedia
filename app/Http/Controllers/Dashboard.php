@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departamento;
+use App\Models\DepartamentoCatalogo;
 use App\Models\Egreso;
 use App\Models\Iglesia;
 use App\Models\Ingreso;
@@ -21,7 +22,7 @@ class Dashboard extends Controller
             $stats = [
                 'total_iglesias' => Iglesia::count(),
                 'total_pastores' => User::where('rol', 'pastor')->count(),
-                'total_departamentos' => Departamento::count(),
+                'total_departamentos' => DepartamentoCatalogo::count(),
                 'total_usuarios' => User::count(),
             ];
 
@@ -30,8 +31,12 @@ class Dashboard extends Controller
 
         // Pastor: solo sus iglesias y departamentos
         if ($user->rol === 'pastor') {
-            $iglesias = $user->iglesiasPastor()->with('departamentos')->get();
-            $departamentos = Departamento::where('pastor_id', $user->id)->get();
+            $iglesias = $user->iglesiasPastor()->with('departamentosHabilitados')->get();
+            $iglesiaIds = $iglesias->pluck('id');
+            $departamentos = Departamento::habilitados()
+                ->whereIn('iglesia_id', $iglesiaIds)
+                ->with('iglesia')
+                ->get();
 
             $resumen = $departamentos->map(function (Departamento $d) {
                 $ingresos = Ingreso::where('departamento_id', $d->id)->sum('monto');
