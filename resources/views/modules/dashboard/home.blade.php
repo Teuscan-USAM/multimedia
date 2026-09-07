@@ -49,7 +49,7 @@
                   @forelse(($iglesias ?? []) as $ig)
                     <li class="list-group-item d-flex justify-content-between">
                       <span>{{ $ig->nombre }}</span>
-                      <span class="text-muted">{{ $ig->departamentos->count() }} deptos.</span>
+                      <span class="text-muted">{{ $ig->departamentosHabilitados->count() }} deptos.</span>
                     </li>
                   @empty
                     <li class="list-group-item text-muted">No tienes iglesias asignadas.</li>
@@ -71,7 +71,7 @@
                   <tbody>
                     @forelse(($resumen ?? []) as $row)
                       <tr>
-                        <td>{{ $row['departamento']->nombre }}</td>
+                        <td>{{ $row['departamento']->nombre }} <small class="text-muted">({{ $row['departamento']->iglesia?->nombre }})</small></td>
                         <td class="text-end">${{ number_format($row['ingresos'], 2) }}</td>
                         <td class="text-end">${{ number_format($row['egresos'], 2) }}</td>
                         <td class="text-end {{ $row['saldo'] < 0 ? 'text-danger fw-bold' : 'text-success fw-bold' }}">${{ number_format($row['saldo'], 2) }}</td>

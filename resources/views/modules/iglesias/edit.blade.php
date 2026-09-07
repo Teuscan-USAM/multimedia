@@ -43,6 +43,20 @@
               <input type="url" name="direccion_google_maps" class="form-control" value="{{ old('direccion_google_maps', $item->direccion_google_maps) }}" placeholder="Pega aquí el enlace de Google Maps">
               <div class="form-text">Pega el enlace de ubicación de Google Maps.</div>
             </div>
+            <div class="col-12">
+              <label class="form-label">Departamentos habilitados</label>
+              <div class="border rounded p-3">
+                @forelse($catalogo as $dep)
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="catalogo_ids[]" value="{{ $dep->id }}" id="cat-{{ $dep->id }}"
+                      @checked(in_array($dep->id, old('catalogo_ids', $habilitados)))>
+                    <label class="form-check-label" for="cat-{{ $dep->id }}">{{ $dep->nombre }}</label>
+                  </div>
+                @empty
+                  <div class="text-muted">Aún no hay departamentos en el catálogo.</div>
+                @endforelse
+              </div>
+            </div>
           </div>
 
           @if($errors->any())

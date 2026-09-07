@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\CategoriaFinanza;
 use App\Models\Departamento;
+use App\Models\DepartamentoCatalogo;
 use App\Models\Iglesia;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -64,13 +65,20 @@ class DatabaseSeeder extends Seeder
         // Asignar iglesia al pastor
         $pastor->iglesiasPastor()->syncWithoutDetaching([$iglesia->id]);
 
-        // Departamento demo
+        $catalogoJovenes = DepartamentoCatalogo::firstOrCreate(
+            ['nombre' => 'Jóvenes'],
+            ['descripcion' => 'Departamento de jóvenes']
+        );
+
         $depto = Departamento::firstOrCreate(
-            ['nombre' => 'Jóvenes', 'iglesia_id' => $iglesia->id],
+            [
+                'iglesia_id' => $iglesia->id,
+                'catalogo_id' => $catalogoJovenes->id,
+            ],
             [
                 'pastor_id' => $pastor->id,
                 'miembro_id' => $miembro->id,
-                'descripcion' => 'Departamento de jóvenes',
+                'habilitado' => true,
             ]
         );
 

@@ -5,13 +5,13 @@
 @section('contenido')
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Editar departamento</h1>
+    <h1>Asignar departamento</h1>
   </div>
 
   <section class="section">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Datos</h5>
+        <h5 class="card-title">{{ $item->nombre }} — {{ $item->iglesia?->nombre }}</h5>
 
         <form method="POST" action="{{ route('departamentos.update', $item->id) }}">
           @csrf
@@ -19,20 +19,12 @@
 
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label">Iglesia *</label>
-              <select name="iglesia_id" class="form-select" required>
-                @foreach($iglesias as $ig)
-                  <option value="{{ $ig->id }}" @selected(old('iglesia_id',$item->iglesia_id)==$ig->id)>{{ $ig->nombre }}</option>
-                @endforeach
-              </select>
+              <label class="form-label">Departamento</label>
+              <input class="form-control" value="{{ $item->nombre }}" disabled>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Nombre *</label>
-              <input name="nombre" class="form-control" value="{{ old('nombre', $item->nombre) }}" required>
-            </div>
-            <div class="col-12">
-              <label class="form-label">Descripción</label>
-              <input name="descripcion" class="form-control" value="{{ old('descripcion', $item->descripcion) }}">
+              <label class="form-label">Iglesia</label>
+              <input class="form-control" value="{{ $item->iglesia?->nombre }}" disabled>
             </div>
             <div class="col-12">
               <label class="form-label">Asignar miembro (opcional)</label>
@@ -56,7 +48,7 @@
           @endif
 
           <div class="mt-3 d-flex gap-2">
-            <button class="btn btn-primary" type="submit">Actualizar</button>
+            <button class="btn btn-primary" type="submit">Guardar asignación</button>
             <a class="btn btn-secondary" href="{{ route('departamentos.index') }}">Volver</a>
           </div>
         </form>
@@ -65,4 +57,3 @@
   </section>
 </main>
 @endsection
-

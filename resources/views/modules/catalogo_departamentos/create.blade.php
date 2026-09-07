@@ -5,26 +5,18 @@
 @section('contenido')
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Crear departamento</h1>
+    <h1>Nuevo departamento</h1>
   </div>
 
   <section class="section">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Datos</h5>
+        <h5 class="card-title">Catálogo global</h5>
 
-        <form method="POST" action="{{ route('departamentos.store') }}">
+        <form method="POST" action="{{ route('catalogo-departamentos.store') }}">
           @csrf
 
           <div class="row g-3">
-            <div class="col-md-6">
-              <label class="form-label">Iglesia *</label>
-              <select name="iglesia_id" class="form-select" required>
-                @foreach($iglesias as $ig)
-                  <option value="{{ $ig->id }}" @selected(old('iglesia_id')==$ig->id)>{{ $ig->nombre }}</option>
-                @endforeach
-              </select>
-            </div>
             <div class="col-md-6">
               <label class="form-label">Nombre *</label>
               <input name="nombre" class="form-control" value="{{ old('nombre') }}" required>
@@ -32,15 +24,6 @@
             <div class="col-12">
               <label class="form-label">Descripción</label>
               <input name="descripcion" class="form-control" value="{{ old('descripcion') }}">
-            </div>
-            <div class="col-12">
-              <label class="form-label">Asignar miembro (opcional)</label>
-              <select name="miembro_id" class="form-select">
-                <option value="">Sin asignar</option>
-                @foreach($miembros as $m)
-                  <option value="{{ $m->id }}" @selected(old('miembro_id')==$m->id)>{{ $m->name }} ({{ $m->email }})</option>
-                @endforeach
-              </select>
             </div>
           </div>
 
@@ -56,7 +39,7 @@
 
           <div class="mt-3 d-flex gap-2">
             <button class="btn btn-primary" type="submit">Guardar</button>
-            <a class="btn btn-secondary" href="{{ route('departamentos.index') }}">Volver</a>
+            <a class="btn btn-secondary" href="{{ route('catalogo-departamentos.index') }}">Volver</a>
           </div>
         </form>
       </div>
@@ -64,4 +47,3 @@
   </section>
 </main>
 @endsection
-

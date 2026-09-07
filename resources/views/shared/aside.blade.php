@@ -59,17 +59,17 @@
                             <i class="bi bi-circle"></i><span>Usuarios</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('catalogo-departamentos.index') }}">
+                            <i class="bi bi-circle"></i><span>Departamentos</span>
+                        </a>
+                    </li>
                 @endif
 
                 @if(Auth::user()->rol === 'pastor')
                     <li>
                         <a href="{{ route('departamentos.index') }}">
                             <i class="bi bi-circle"></i><span>Departamentos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('categorias.index') }}">
-                            <i class="bi bi-circle"></i><span>Categorías</span>
                         </a>
                     </li>
                 @endif
