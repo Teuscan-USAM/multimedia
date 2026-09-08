@@ -36,5 +36,9 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('ver-usuarios', function (User $user){
             return $user->rol === 'admin';
         });
+
+        Gate::define('ver-reportes', function (User $user){
+            return in_array($user->rol, ['admin', 'pastor', 'miembro']);
+        });
     }
 }

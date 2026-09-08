@@ -35,8 +35,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil');
     Route::post('/perfil/update', [PerfilController::class, 'update'])->name('perfil.update');
 
-    // 👥 Reportes
-    Route::get('/reportes', [ReportesController::class, 'index'])->name('reportes.index');
+    Route::prefix('reportes')->group(function () {
+        Route::get('/', [ReportesController::class, 'index'])->name('reportes.index');
+
+        Route::middleware('Checkrol:pastor,miembro')->group(function () {
+            Route::get('/finanzas', [ReportesController::class, 'finanzas'])->name('reportes.finanzas');
+            Route::get('/finanzas/pdf', [ReportesController::class, 'finanzasPdf'])->name('reportes.finanzas.pdf');
+        });
+
+        Route::middleware('Checkrol:admin')->group(function () {
+            Route::get('/categorias', [ReportesController::class, 'categorias'])->name('reportes.categorias');
+            Route::get('/departamentos', [ReportesController::class, 'departamentos'])->name('reportes.departamentos');
+            Route::get('/iglesias', [ReportesController::class, 'iglesias'])->name('reportes.iglesias');
+        });
+    });
 });
 
 // =====================================================
