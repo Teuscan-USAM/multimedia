@@ -10,6 +10,6 @@ class InicioController extends Controller
     public function index()
     {
         $anuncios = Anuncio::where('estado', 1)->get();
-        return view('inicio', compact('anuncios'));
+        return view('inicio.index', compact('anuncios'));
     }
 }

@@ -94,7 +94,7 @@
 <body>
   <header class="site-header">
     <nav class="nav-wrap" aria-label="Navegación principal">
-      <a class="brand" href="{{ route('inicio') }}"><span class="brand-mark">AD</span><span>EL SALVADOR</span></a>
+      <a class="brand" href="{{ route('inicio.index') }}"><span class="brand-mark">AD</span><span>EL SALVADOR</span></a>
       <a class="login-link" href="{{ route('login') }}">Iniciar sesión</a>
     </nav>
     <div class="hero">

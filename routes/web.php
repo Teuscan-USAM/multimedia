@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/crear-admin', [AuthController::class, 'crearAdmin'])->name('seed.admin');
 
 // Página pública de inicio (anuncios)
-Route::get('/', [InicioController::class, 'index'])->name('inicio');
+Route::get('/', [InicioController::class, 'index'])->name('inicio.index');
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/logear', [AuthController::class, 'logear'])->name('logear');
