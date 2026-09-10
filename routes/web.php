@@ -19,6 +19,8 @@ Route::get('/crear-admin', [AuthController::class, 'crearAdmin'])->name('seed.ad
 
 // Página pública de inicio (anuncios)
 Route::get('/', [InicioController::class, 'index'])->name('inicio.index');
+Route::get('/jovenes', [InicioController::class, 'jovenes'])->name('inicio.jovenes');
+Route::get('/escuela-dominical', [InicioController::class, 'escueladominical'])->name('inicio.escueladominical');
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/logear', [AuthController::class, 'logear'])->name('logear');

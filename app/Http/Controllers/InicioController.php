@@ -12,4 +12,16 @@ class InicioController extends Controller
         $anuncios = Anuncio::where('estado', 1)->get();
         return view('inicio.index', compact('anuncios'));
     }
+
+    public function jovenes()
+    {
+        $anuncios = Anuncio::where('estado', 1)->get();
+        return view('inicio.jovenes', compact('anuncios'));
+    }
+
+    public function escueladominical()
+    {
+        $anuncios = Anuncio::where('estado', 1)->get();
+        return view('inicio.escueladominical', compact('anuncios'));
+    }
 }
