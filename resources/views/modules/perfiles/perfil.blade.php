@@ -20,7 +20,6 @@
 
           {{-- ✅ FOTO DE PERFIL --}}
           <div class="text-center mb-4">
-            <label for="foto" class="form-label d-block fw-semibold">Foto de perfil</label>
             <div class="position-relative d-inline-block">
               @if($usuario->foto)
                 <img src="{{ asset('fotos_perfil/' . $usuario->foto) }}"
@@ -35,7 +34,6 @@
                 </div>
               @endif
             </div>
-            <input type="file" name="foto" id="foto" class="form-control mt-3">
           </div>
 
           {{-- ✅ CAMPOS DE INFORMACIÓN DEL USUARIO --}}
@@ -48,7 +46,7 @@
           <div class="mb-3">
             <label for="email" class="form-label fw-semibold">Correo Electrónico</label>
             <input type="email" name="email" id="email" class="form-control" 
-                   value="{{ old('email', $usuario->email) }}" required>
+                   value="{{ old('email', $usuario->email) }}" readonly>
           </div>
 
           <div class="mb-3">

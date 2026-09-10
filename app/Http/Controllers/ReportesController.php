@@ -166,7 +166,8 @@ class ReportesController extends Controller
         $ingresos = Ingreso::query()
             ->whereIn('departamento_id', $departamentoIds)
             ->whereBetween('fecha', [$inicio->toDateString(), $fin->toDateString()])
-            ->with(['categoria', 'departamento.iglesia', 'user'])
+            ->select(['id', 'departamento_id', 'categoria_id', 'nombre', 'monto', 'fecha'])
+            ->with('categoria')
             ->orderByDesc('fecha')
             ->orderByDesc('id')
             ->get();
@@ -174,14 +175,18 @@ class ReportesController extends Controller
         $egresos = Egreso::query()
             ->whereIn('departamento_id', $departamentoIds)
             ->whereBetween('fecha', [$inicio->toDateString(), $fin->toDateString()])
-            ->with(['categoria', 'departamento.iglesia', 'user'])
+            ->select(['id', 'departamento_id', 'categoria_id', 'nombre', 'monto', 'fecha'])
+            ->with('categoria')
             ->orderByDesc('fecha')
             ->orderByDesc('id')
             ->get();
 
-        $porDepartamento = $departamentos->map(function (Departamento $departamento) use ($ingresos, $egresos) {
-            $ingresosDepto = $ingresos->where('departamento_id', $departamento->id)->values();
-            $egresosDepto = $egresos->where('departamento_id', $departamento->id)->values();
+        $ingresosPorDepartamento = $ingresos->groupBy('departamento_id');
+        $egresosPorDepartamento = $egresos->groupBy('departamento_id');
+
+        $porDepartamento = $departamentos->map(function (Departamento $departamento) use ($ingresosPorDepartamento, $egresosPorDepartamento) {
+            $ingresosDepto = $ingresosPorDepartamento->get($departamento->id, collect());
+            $egresosDepto = $egresosPorDepartamento->get($departamento->id, collect());
             $totalIngresos = (float) $ingresosDepto->sum('monto');
             $totalEgresos = (float) $egresosDepto->sum('monto');
 
