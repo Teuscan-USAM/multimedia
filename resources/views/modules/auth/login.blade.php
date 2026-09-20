@@ -62,7 +62,7 @@
                 <!-- You can delete the links only if you purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                Diseñado en Luz y Verdad <a href="https://www.facebook.com/profile.php?id=61577622221800/">ingresar aqui</a>
+                Diseñado por Multimedia <a href="https://www.facebook.com/profile.php?id=61577622221800/">ingresar aqui</a>
               </div>
 
             </div>
