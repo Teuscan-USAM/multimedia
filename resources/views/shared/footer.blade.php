@@ -1,6 +1,6 @@
 <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>Development by Luz y Verdad</span></strong>. Todos los derechos reservados
+      &copy; Copyright <strong><span>Development by Multimedia</span></strong>. Todos los derechos reservados
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->

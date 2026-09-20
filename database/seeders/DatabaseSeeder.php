@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'admin@admin.com'],
             [
                 'name' => 'Administrador',
-                'password' => Hash::make('admin'),
+                'password' => Hash::make('123'),
                 'activo' => true,
                 'rol' => 'admin',
             ]
@@ -30,10 +30,10 @@ class DatabaseSeeder extends Seeder
 
         // Pastor
         $pastor = User::firstOrCreate(
-            ['email' => 'pastor@demo.com'],
+            ['email' => 'miguel@pastor.com'],
             [
-                'name' => 'Pastor Demo',
-                'password' => Hash::make('demo1234'),
+                'name' => 'Pastor miguel',
+                'password' => Hash::make('123'),
                 'activo' => true,
                 'rol' => 'pastor',
             ]
@@ -41,10 +41,10 @@ class DatabaseSeeder extends Seeder
 
         // Miembro
         $miembro = User::firstOrCreate(
-            ['email' => 'miembro@miembro.com'],
+            ['email' => 'lincy@miembro.com'],
             [
-                'name' => 'Miembro Demo',
-                'password' => Hash::make('demo1234'),
+                'name' => 'Lincy tatiana',
+                'password' => Hash::make('123'),
                 'activo' => true,
                 'rol' => 'miembro',
             ]
@@ -53,12 +53,12 @@ class DatabaseSeeder extends Seeder
 
         // Iglesia demo
         $iglesia = Iglesia::firstOrCreate(
-            ['nombre' => 'Iglesia Demo'],
+            ['nombre' => 'Iglesia Luz y Verdad'],
             [
                 'direccion' => 'Calle Principal 123',
                 'telefono' => '0000-0000',
                 'ciudad' => 'Ciudad',
-                'responsable' => 'Pastor Demo',
+                'responsable' => '',
             ]
         );
 
