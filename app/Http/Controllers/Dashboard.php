@@ -15,6 +15,7 @@ class Dashboard extends Controller
     public function index(){
         $titulo = 'Dashboard';
 
+        /** @var User $user */
         $user = Auth::user();
 
         // Admin: métricas globales

@@ -44,7 +44,7 @@
   ======================================================== -->
 </head>
 
-<body>
+<body data-success-message="{{ session('success', '') }}" data-error-message="{{ session('error', '') }}">
 
   <!-- ======= Header ======= -->
   @include('shared.header')
@@ -120,23 +120,16 @@
         
     });
 
-    @if(session('success'))
-      Swal.fire({
-        title: 'Exito!',
-        text: '{{session('success')}}',
-        icon: 'success',
-        confirmButtonText:'Aceptar'
-      });
-    @endif
+    const successMessage = document.body.dataset.successMessage;
+    const errorMessage = document.body.dataset.errorMessage;
 
-    @if(session('error'))
-      Swal.fire({
-        title: 'Error!',
-        text: '{{session('error')}}',
-        icon: 'error',
-        confirmButtonText:'Aceptar'
-      });
-    @endif
+    if (successMessage) {
+      Swal.fire({ title: 'Exito!', text: successMessage, icon: 'success', confirmButtonText: 'Aceptar' });
+    }
+
+    if (errorMessage) {
+      Swal.fire({ title: 'Error!', text: errorMessage, icon: 'error', confirmButtonText: 'Aceptar' });
+    }
   </script>
 
   @stack('scripts')

@@ -12,6 +12,7 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\IngresosController;
 use App\Http\Controllers\EgresosController;
 use App\Http\Controllers\ReportesController;
+use App\Http\Controllers\AnunciosController;
 use Illuminate\Support\Facades\Route;
 
 // Crear un usuario admin (solo usar una vez en un entorno nuevo)
@@ -57,6 +58,11 @@ Route::middleware('auth')->group(function () {
 // 🏛️ Módulos del sistema de iglesias/finanzas
 // =====================================================
 Route::middleware(['auth', 'Checkrol:admin'])->group(function () {
+    Route::get('/anuncios', ['App\\Http\\Controllers\\AnunciosController', 'index'])->name('anuncios.index');
+    Route::get('/anuncios/create', ['App\\Http\\Controllers\\AnunciosController', 'create'])->name('anuncios.create');
+    Route::post('/anuncios', ['App\\Http\\Controllers\\AnunciosController', 'store'])->name('anuncios.store');
+    Route::delete('/anuncios/{anuncio}', ['App\\Http\\Controllers\\AnunciosController', 'destroy'])->name('anuncios.destroy');
+
     // Iglesias (admin)
     Route::prefix('iglesias')->group(function () {
         Route::get('/', [IglesiasController::class, 'index'])->name('iglesias.index');

@@ -13,6 +13,7 @@ class PerfilController extends Controller
      */
     public function index()
     {
+        /** @var \App\Models\User $usuario */
         $usuario = Auth::user();
         $titulo = 'Mi Perfil';
         return view('modules.perfiles.perfil', compact('usuario', 'titulo'));
@@ -23,6 +24,7 @@ class PerfilController extends Controller
      */
     public function update(Request $request)
     {
+        /** @var \App\Models\User $usuario */
         $usuario = Auth::user();
 
         // ✅ Validar campos

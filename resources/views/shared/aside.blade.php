@@ -9,6 +9,15 @@
             </a>
         </li>
 
+        @if(Auth::user()->rol === 'admin')
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('anuncios.index') }}">
+                <i class="bi bi-megaphone"></i>
+                <span>Anuncios</span>
+            </a>
+        </li>
+        @endif
+
         <!-- Finanzas: admin/pastor/miembro -->
         @can('ver-finanzas')
         <li class="nav-item">
