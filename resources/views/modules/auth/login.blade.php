@@ -72,5 +72,5 @@
       </section>
 
     </div>
-  </main>
+  </main> 
 @endsection

@@ -35,7 +35,7 @@
 						@forelse($anuncios->take(3) as $index => $anuncio)
 							@php
 								$image = $anuncio->imagen;
-								$imageUrl = $image && (str_starts_with($image, 'http://') || str_starts_with($image, 'https://') || str_starts_with($image, '/')) ? $image : ($image ? asset('storage/' . $image) : asset('img/photo' . (($index % 3) + 1) . '.jpg'));
+								$imageUrl = $image && (str_starts_with($image, 'http://') || str_starts_with($image, 'https://') || str_starts_with($image, '/')) ? $image : ($image ? route('anuncios.image', $anuncio) : asset('img/photo' . (($index % 3) + 1) . '.jpg'));
 							@endphp
 							<article class="carousel-slide" style="background-image:linear-gradient(rgba(22,33,28,.38),rgba(22,33,28,.62)),url('{{ $imageUrl }}')">
 								<span class="slide-number">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }} / {{ str_pad(min($anuncios->count(), 3), 2, '0', STR_PAD_LEFT) }}</span>
@@ -56,7 +56,7 @@
 
 		<section class="youth-posts" aria-labelledby="youth-posts-title"><div class="section-heading"><div><span class="eyebrow youth-kicker">Archivo vivo</span><h2 id="youth-posts-title">Noticias y recuerdos</h2></div></div><div class="posts-grid">
 			@forelse($anuncios as $anuncio)
-				@php $image = $anuncio->imagen; $imageUrl = $image && (str_starts_with($image, 'http://') || str_starts_with($image, 'https://') || str_starts_with($image, '/')) ? $image : ($image ? asset('storage/' . $image) : null); @endphp
+				@php $image = $anuncio->imagen; $imageUrl = $image && (str_starts_with($image, 'http://') || str_starts_with($image, 'https://') || str_starts_with($image, '/')) ? $image : ($image ? route('anuncios.image', $anuncio) : null); @endphp
 				<article class="post-card youth-post-card"><div class="post-media">@if($imageUrl)<img class="post-media-image" src="{{ $imageUrl }}" alt="Imagen del anuncio: {{ $anuncio->titulo }}" loading="lazy">@else<div class="blank-media" aria-label="Este anuncio no tiene fotografía">Jóvenes</div>@endif</div><div class="post-body"><span class="post-date">{{ $anuncio->created_at ? $anuncio->created_at->format('d.m.Y') : 'Hoy' }}</span><h3>{{ $anuncio->titulo }}</h3><p>{{ $anuncio->descripcion }}</p></div></article>
 			@empty
 				<div class="youth-empty"><span class="youth-empty-mark">+</span><div><strong>Estamos preparando nuevos anuncios.</strong><p>Muy pronto encontrarás aquí las próximas actividades y fotografías de Jóvenes.</p></div></div>

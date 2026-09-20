@@ -38,6 +38,13 @@ class AnunciosController extends Controller
         return redirect()->route('anuncios.index')->with('success', 'Anuncio publicado correctamente.');
     }
 
+    public function image(Anuncio $anuncio)
+    {
+        abort_unless($anuncio->imagen && Storage::disk('public')->exists($anuncio->imagen), 404);
+
+        return response()->file(Storage::disk('public')->path($anuncio->imagen));
+    }
+
     public function destroy(Anuncio $anuncio)
     {
         if ($anuncio->imagen) {

@@ -22,6 +22,7 @@ Route::get('/crear-admin', [AuthController::class, 'crearAdmin'])->name('seed.ad
 Route::get('/', [InicioController::class, 'index'])->name('inicio.index');
 Route::get('/jovenes', [InicioController::class, 'jovenes'])->name('inicio.jovenes');
 Route::get('/escuela-dominical', [InicioController::class, 'escueladominical'])->name('inicio.escueladominical');
+Route::get('/anuncios/{anuncio}/imagen', ['App\\Http\\Controllers\\AnunciosController', 'image'])->name('anuncios.image');
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/logear', [AuthController::class, 'logear'])->name('logear');
@@ -108,17 +109,19 @@ Route::middleware(['auth', 'Checkrol:pastor'])->group(function () {
 });
 
 Route::middleware(['auth', 'Checkrol:admin,pastor'])->group(function () {
-    // El administrador y el pastor solo pueden consultar categorías.
-    Route::get('/categorias', [CategoriasController::class, 'index'])->name('categorias.index');
+    // Categorías (admin/pastor): consulta y administración existente
+    Route::prefix('categorias')->group(function () {
+        Route::get('/', [CategoriasController::class, 'index'])->name('categorias.index');
+        Route::get('/edit/{id}', [CategoriasController::class, 'edit'])->name('categorias.edit');
+        Route::put('/update/{id}', [CategoriasController::class, 'update'])->name('categorias.update');
+        Route::delete('/destroy/{id}', [CategoriasController::class, 'destroy'])->name('categorias.destroy');
+    });
 });
 
 Route::middleware(['auth', 'Checkrol:admin'])->group(function () {
-    // Solo el administrador puede modificar categorías de ingresos y egresos.
+    // Solo el administrador puede crear categorías de ingresos y egresos.
     Route::get('/categorias/create', [CategoriasController::class, 'create'])->name('categorias.create');
     Route::post('/categorias/store', [CategoriasController::class, 'store'])->name('categorias.store');
-    Route::get('/categorias/edit/{id}', [CategoriasController::class, 'edit'])->name('categorias.edit');
-    Route::put('/categorias/update/{id}', [CategoriasController::class, 'update'])->name('categorias.update');
-    Route::delete('/categorias/destroy/{id}', [CategoriasController::class, 'destroy'])->name('categorias.destroy');
 });
 
 Route::middleware(['auth', 'Checkrol:miembro'])->group(function () {
