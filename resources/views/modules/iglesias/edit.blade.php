@@ -31,10 +31,6 @@
               <input name="telefono" class="form-control" value="{{ old('telefono', $item->telefono) }}">
             </div>
             <div class="col-md-6">
-              <label class="form-label">Responsable</label>
-              <input name="responsable" class="form-control" value="{{ old('responsable', $item->responsable) }}">
-            </div>
-            <div class="col-md-6">
               <label class="form-label">Pastor responsable</label>
               <select name="pastor_id" class="form-select">
                 <option value="">Sin pastor responsable</option>

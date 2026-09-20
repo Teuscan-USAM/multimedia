@@ -13,7 +13,7 @@ class IglesiasController extends Controller
     public function index()
     {
         $titulo = 'Iglesias';
-        $items = Iglesia::orderBy('nombre')->get();
+        $items = Iglesia::with('pastorResponsable')->orderBy('nombre')->get();
         return view('modules.iglesias.index', compact('titulo', 'items'));
     }
 
@@ -91,7 +91,9 @@ class IglesiasController extends Controller
     {
         if ($pastorId) {
             User::where('id', $pastorId)->where('rol', 'pastor')->firstOrFail();
-            $iglesia->pastores()->syncWithoutDetaching([$pastorId]);
+            $iglesia->pastores()->sync([$pastorId]);
+        } else {
+            $iglesia->pastores()->detach();
         }
 
         $iglesia->update(['pastor_id' => $pastorId]);

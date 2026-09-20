@@ -35,7 +35,7 @@
                   <td>{{ $it->nombre }}</td>
                   <td>{{ $it->ciudad }}</td>
                   <td>{{ $it->telefono }}</td>
-                  <td>{{ $it->responsable }}</td>
+                  <td>{{ $it->pastorResponsable?->name ?? 'Sin responsable' }}</td>
                   <td class="text-end">
                     <a class="btn btn-sm btn-warning" href="{{ route('iglesias.edit', $it->id) }}">Editar</a>
                     <form class="d-inline" method="POST" action="{{ route('iglesias.destroy', $it->id) }}" onsubmit="return confirm('¿Eliminar esta iglesia?');">

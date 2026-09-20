@@ -53,9 +53,9 @@
                 @endforeach
               </select>
             </div>
-            <div class="col-12">
-              <label class="form-label">Asignar iglesias (solo Pastor)</label>
-              <select name="iglesias[]" class="form-select" multiple>
+            <div class="col-12" id="iglesias-pastor-group" hidden>
+              <label class="form-label">Iglesias a cargo</label>
+              <select name="iglesias[]" id="iglesias_pastor" class="form-select" multiple>
                 @foreach($iglesias as $ig)
                   <option value="{{ $ig->id }}" @selected(in_array($ig->id, old('iglesias', $asignadas)))>
                     {{ $ig->nombre }}
@@ -111,12 +111,19 @@
   const rol = document.querySelector('select[name="rol"]');
   const iglesiaGroup = document.getElementById('iglesia-miembro-group');
   const iglesia = document.getElementById('iglesia_id');
+  const iglesiasPastorGroup = document.getElementById('iglesias-pastor-group');
+  const iglesiasPastor = document.getElementById('iglesias_pastor');
 
   function actualizarIglesia() {
     const esMiembro = rol.value === 'miembro';
+    const esPastor = rol.value === 'pastor';
     iglesiaGroup.hidden = !esMiembro;
     iglesia.required = esMiembro;
+    iglesiasPastorGroup.hidden = !esPastor;
     if (!esMiembro) iglesia.value = '';
+    if (!esPastor) {
+      Array.from(iglesiasPastor.options).forEach(option => option.selected = false);
+    }
   }
 
   rol.addEventListener('change', actualizarIglesia);

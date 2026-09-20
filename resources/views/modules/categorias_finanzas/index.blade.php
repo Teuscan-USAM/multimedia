@@ -39,12 +39,16 @@
                   </td>
                   <td>{{ $it->nombre }}</td>
                   <td class="text-end">
-                    <a class="btn btn-sm btn-warning" href="{{ route('categorias.edit', $it->id) }}">Editar</a>
-                    <form class="d-inline" method="POST" action="{{ route('categorias.destroy', $it->id) }}" onsubmit="return confirm('¿Eliminar esta categoría?');">
-                      @csrf
-                      @method('DELETE')
-                      <button class="btn btn-sm btn-danger" type="submit">Eliminar</button>
-                    </form>
+                    @if(auth()->user()->rol === 'admin')
+                      <a class="btn btn-sm btn-warning" href="{{ route('categorias.edit', $it->id) }}">Editar</a>
+                      <form class="d-inline" method="POST" action="{{ route('categorias.destroy', $it->id) }}" onsubmit="return confirm('¿Eliminar esta categoría?');">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-sm btn-danger" type="submit">Eliminar</button>
+                      </form>
+                    @else
+                      <span class="text-muted">Solo lectura</span>
+                    @endif
                   </td>
                 </tr>
               @endforeach

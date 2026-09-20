@@ -51,6 +51,17 @@ class DepartamentosController extends Controller
             $miembro = User::where('rol', 'miembro')
                 ->where('iglesia_id', $item->iglesia_id)
                 ->findOrFail($miembroId);
+
+            $yaAsignado = Departamento::where('miembro_id', $miembroId)
+                ->whereKeyNot($item->id)
+                ->exists();
+
+            if ($yaAsignado) {
+                return back()->withErrors([
+                    'miembro_id' => 'Este miembro ya está asignado a otro departamento.',
+                ])->withInput();
+            }
+
             $pastorResponsable = $item->iglesia()->with('pastorResponsable')->first()?->pastorResponsable;
 
             if (! $pastorResponsable) {
@@ -78,6 +89,17 @@ class DepartamentosController extends Controller
         $miembro = User::where('rol', 'miembro')
             ->where('iglesia_id', $item->iglesia_id)
             ->findOrFail($data['miembro_id']);
+
+        $yaAsignado = Departamento::where('miembro_id', $miembro->id)
+            ->whereKeyNot($item->id)
+            ->exists();
+
+        if ($yaAsignado) {
+            return back()->withErrors([
+                'miembro_id' => 'Este miembro ya está asignado a otro departamento.',
+            ])->withInput();
+        }
+
         $pastorResponsable = $item->iglesia()->with('pastorResponsable')->first()?->pastorResponsable;
 
         if (! $pastorResponsable) {
