@@ -11,10 +11,23 @@
 
         @if(Auth::user()->rol === 'admin')
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('anuncios.index') }}">
-                <i class="bi bi-megaphone"></i>
-                <span>Anuncios</span>
+            @php($anunciosActivo = request()->routeIs('anuncios.index', 'anuncios.create', 'anuncios.escuela.index', 'anuncios.escuela.create'))
+            <a class="nav-link {{ $anunciosActivo ? '' : 'collapsed' }}" data-bs-target="#anuncios-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-megaphone"></i><span>Anuncios</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
             </a>
+            <ul id="anuncios-nav" class="nav-content collapse {{ $anunciosActivo ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ route('anuncios.index') }}">
+                        <i class="bi bi-circle"></i><span>Jóvenes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('anuncios.escuela.index') }}">
+                        <i class="bi bi-circle"></i><span>Escuela Dominical</span>
+                    </a>
+                </li>
+            </ul>
         </li>
         @endif
 

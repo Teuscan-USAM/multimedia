@@ -9,19 +9,20 @@ class InicioController extends Controller
 {
     public function index()
     {
-        $anuncios = Anuncio::where('estado', 1)->get();
-        return view('inicio.index', compact('anuncios'));
+        $anunciosJovenes = Anuncio::where('estado', 1)->where('seccion', 'jovenes')->latest()->get();
+        $anunciosEscuela = Anuncio::where('estado', 1)->where('seccion', 'escuela_dominical')->latest()->get();
+        return view('inicio.index', compact('anunciosJovenes', 'anunciosEscuela'));
     }
 
     public function jovenes()
     {
-        $anuncios = Anuncio::where('estado', 1)->get();
+        $anuncios = Anuncio::where('estado', 1)->where('seccion', 'jovenes')->latest()->get();
         return view('inicio.jovenes', compact('anuncios'));
     }
 
     public function escueladominical()
     {
-        $anuncios = Anuncio::where('estado', 1)->get();
+        $anuncios = Anuncio::where('estado', 1)->where('seccion', 'escuela_dominical')->latest()->get();
         return view('inicio.escueladominical', compact('anuncios'));
     }
 }

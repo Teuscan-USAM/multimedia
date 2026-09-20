@@ -61,6 +61,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'Checkrol:admin'])->group(function () {
     Route::get('/anuncios', ['App\\Http\\Controllers\\AnunciosController', 'index'])->name('anuncios.index');
     Route::get('/anuncios/create', ['App\\Http\\Controllers\\AnunciosController', 'create'])->name('anuncios.create');
+    Route::get('/anuncios/escuela-dominical', ['App\\Http\\Controllers\\AnunciosController', 'escuelaDominical'])->name('anuncios.escuela.index');
+    Route::get('/anuncios/escuela-dominical/create', ['App\\Http\\Controllers\\AnunciosController', 'createEscuelaDominical'])->name('anuncios.escuela.create');
     Route::post('/anuncios', ['App\\Http\\Controllers\\AnunciosController', 'store'])->name('anuncios.store');
     Route::delete('/anuncios/{anuncio}', ['App\\Http\\Controllers\\AnunciosController', 'destroy'])->name('anuncios.destroy');
 

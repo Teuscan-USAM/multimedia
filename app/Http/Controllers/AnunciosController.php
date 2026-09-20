@@ -10,13 +10,34 @@ class AnunciosController extends Controller
 {
     public function index()
     {
-        $anuncios = Anuncio::latest()->get();
-        return view('modules/anuncios/index', compact('anuncios'));
+        return $this->indexPorSeccion('jovenes', 'Anuncios de Jóvenes');
+    }
+
+    public function escuelaDominical()
+    {
+        return $this->indexPorSeccion('escuela_dominical', 'Anuncios de Escuela Dominical');
+    }
+
+    private function indexPorSeccion(string $seccion, string $tituloSeccion)
+    {
+        $anuncios = Anuncio::where('seccion', $seccion)->latest()->get();
+        return view('modules/anuncios/index', compact('anuncios', 'seccion', 'tituloSeccion'));
     }
 
     public function create()
     {
-        return view('modules/anuncios/create');
+        return view('modules/anuncios/create', [
+            'seccion' => 'jovenes',
+            'tituloSeccion' => 'Jóvenes',
+        ]);
+    }
+
+    public function createEscuelaDominical()
+    {
+        return view('modules/anuncios/create', [
+            'seccion' => 'escuela_dominical',
+            'tituloSeccion' => 'Escuela Dominical',
+        ]);
     }
 
     public function store(Request $request)
@@ -25,6 +46,7 @@ class AnunciosController extends Controller
             'titulo' => ['required', 'string', 'max:255'],
             'descripcion' => ['nullable', 'string'],
             'imagen' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'seccion' => ['required', 'in:jovenes,escuela_dominical'],
             'estado' => ['nullable', 'boolean'],
         ]);
 
