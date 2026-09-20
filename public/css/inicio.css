@@ -52,7 +52,10 @@ h1 { max-width:700px; margin-bottom:1.4rem; color:var(--white); font-size:clamp(
 .carousel-dots { position:absolute; bottom:2.6rem; left:2rem; z-index:2; display:flex; gap:.45rem; }
 .carousel-dot { width:.55rem; height:.55rem; padding:0; border-radius:50%; }
 .carousel-dot.active { background:var(--white); }
-.below-grid { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr); gap:4rem; margin-top:6rem; }
+.below-grid { display:block; margin-top:6rem; }
+.below-grid > section + section { margin-top:4rem; }
+.below-grid .section-heading { margin-bottom:1.35rem; }
+.below-grid .section-heading h2 { font-size:clamp(1.5rem,3vw,2.2rem); }
 .posts-grid { display:grid; gap:1.2rem; }
 .post-card { display:grid; grid-template-columns:190px 1fr; min-height:190px; border:1px solid var(--line); border-radius:.55rem; overflow:hidden; background:var(--white); transition:transform .2s ease,box-shadow .2s ease; }
 .post-card:hover { transform:translateY(-3px); box-shadow:0 14px 28px rgba(28,36,33,.08); }

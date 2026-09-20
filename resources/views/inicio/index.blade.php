@@ -40,15 +40,30 @@
     </section>
     <div class="below-grid">
       <section aria-labelledby="anuncios-title">
-        <div class="section-heading"><div><span class="eyebrow">Desde la iglesia</span><h2 id="anuncios-title">Anuncios recientes</h2></div></div>
+        <div class="section-heading"><div><span class="eyebrow">Jóvenes</span><h2 id="anuncios-title">Anuncios recientes</h2></div></div>
         <div class="posts-grid">
-          @forelse($anuncios as $anuncio)
+          @forelse($anunciosJovenes as $anuncio)
             <article class="post-card">
-              <div class="blank-media" aria-label="Espacio reservado para fotografía">Foto</div>
+              @php $imageUrl = $anuncio->imagen ? route('anuncios.image', $anuncio) : null; @endphp
+              <div class="post-media">@if($imageUrl)<img class="post-media-image" src="{{ $imageUrl }}" alt="Imagen del anuncio: {{ $anuncio->titulo }}" loading="lazy">@else<div class="blank-media" aria-label="Espacio reservado para fotografía">Jóvenes</div>@endif</div>
               <div class="post-body"><span class="post-date">{{ $anuncio->created_at ? $anuncio->created_at->format('d.m.Y') : 'Hoy' }}</span><h3>{{ $anuncio->titulo }}</h3><p>{{ $anuncio->descripcion }}</p></div>
             </article>
           @empty
             <div class="empty-state">Pronto compartiremos nuevos anuncios con la comunidad.</div>
+          @endforelse
+        </div>
+      </section>
+      <section aria-labelledby="escuela-anuncios-title">
+        <div class="section-heading"><div><span class="eyebrow">Escuela Dominical</span><h2 id="escuela-anuncios-title">Anuncios recientes</h2></div></div>
+        <div class="posts-grid">
+          @forelse($anunciosEscuela as $anuncio)
+            <article class="post-card">
+              @php $imageUrl = $anuncio->imagen ? route('anuncios.image', $anuncio) : null; @endphp
+              <div class="post-media">@if($imageUrl)<img class="post-media-image" src="{{ $imageUrl }}" alt="Imagen del anuncio: {{ $anuncio->titulo }}" loading="lazy">@else<div class="blank-media" aria-label="Espacio reservado para fotografía">Escuela</div>@endif</div>
+              <div class="post-body"><span class="post-date">{{ $anuncio->created_at ? $anuncio->created_at->format('d.m.Y') : 'Hoy' }}</span><h3>{{ $anuncio->titulo }}</h3><p>{{ $anuncio->descripcion }}</p></div>
+            </article>
+          @empty
+            <div class="empty-state">Pronto compartiremos nuevos anuncios de Escuela Dominical.</div>
           @endforelse
         </div>
       </section>
