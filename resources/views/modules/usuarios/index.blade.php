@@ -49,11 +49,15 @@
 @push('scripts')
 <script>
   function recargar_tbody(){
+    const tabla = $('#tbody-usuarios').closest('table').DataTable();
+
     $.ajax({
       type : "GET",
       url : "{{ route('usuarios.tbody') }}",
       success : function(respuesta){
-        $("#tbody-usuarios").html(respuesta);
+        const filas = $('<tbody>').html(respuesta).children('tr');
+        tabla.clear();
+        tabla.rows.add(filas).draw(false);
       },
       error: function() {
         Swal.fire('Error', 'No se pudo recargar la tabla.', 'error');
@@ -121,7 +125,7 @@
   }
 
   $(document).ready(function(){
-    $('.form-check-input').on("change", function(){
+    $('#tbody-usuarios').on("change", ".form-check-input", function(){
       let id = $(this).attr("id");
       let estado = $(this).is(":checked") ? 1 : 0;
       cambiar_estado(id, estado);
