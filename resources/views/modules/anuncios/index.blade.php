@@ -24,7 +24,7 @@
               <tr>
                 <td><strong>{{ $anuncio->titulo }}</strong><br><small>{{ Str::limit($anuncio->descripcion, 90) }}</small></td>
                 <td>{{ $anuncio->seccion === 'escuela_dominical' ? 'Escuela Dominical' : 'Jóvenes' }}</td>
-                <td>@if($anuncio->imagen)<img src="{{ asset('storage/' . $anuncio->imagen) }}" alt="" width="72" height="48" style="object-fit:cover">@else Sin foto @endif</td>
+                <td>@if($anuncio->imagen)<img src="{{ route('anuncios.image', $anuncio) }}" alt="Imagen del anuncio: {{ $anuncio->titulo }}" width="72" height="48" style="object-fit:cover">@else Sin foto @endif</td>
                 <td><span class="badge {{ $anuncio->estado ? 'bg-success' : 'bg-secondary' }}">{{ $anuncio->estado ? 'Publicado' : 'Oculto' }}</span></td>
                 <td>{{ $anuncio->created_at?->format('d/m/Y') }}</td>
                 <td><form action="{{ route('anuncios.destroy', $anuncio) }}" method="POST" onsubmit="return confirm('¿Eliminar este anuncio?')">@csrf @method('DELETE')<button class="btn btn-sm btn-outline-danger" type="submit"><i class="bi bi-trash"></i></button></form></td>
