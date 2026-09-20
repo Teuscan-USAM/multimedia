@@ -14,7 +14,7 @@
         <table class="table datatable align-middle">
           <thead><tr><th>Título</th><th>Imagen</th><th>Estado</th><th>Fecha</th><th></th></tr></thead>
           <tbody>
-            @forelse($anuncios as $anuncio)
+            @foreach($anuncios as $anuncio)
               <tr>
                 <td><strong>{{ $anuncio->titulo }}</strong><br><small>{{ Str::limit($anuncio->descripcion, 90) }}</small></td>
                 <td>@if($anuncio->imagen)<img src="{{ asset('storage/' . $anuncio->imagen) }}" alt="" width="72" height="48" style="object-fit:cover">@else Sin foto @endif</td>
@@ -22,9 +22,7 @@
                 <td>{{ $anuncio->created_at?->format('d/m/Y') }}</td>
                 <td><form action="{{ route('anuncios.destroy', $anuncio) }}" method="POST" onsubmit="return confirm('¿Eliminar este anuncio?')">@csrf @method('DELETE')<button class="btn btn-sm btn-outline-danger" type="submit"><i class="bi bi-trash"></i></button></form></td>
               </tr>
-            @empty
-              <tr><td colspan="5" class="text-center py-4">Todavía no hay anuncios.</td></tr>
-            @endforelse
+            @endforeach
           </tbody>
         </table>
       </div>
