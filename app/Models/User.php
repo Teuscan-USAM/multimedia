@@ -50,11 +50,12 @@ class User extends Authenticatable
         ];
     }
 
-    public function iglesiasPastor()
+     public function iglesiasPastor()
     {
         return $this->belongsToMany(Iglesia::class, 'iglesia_pastor', 'pastor_id', 'iglesia_id')
             ->withTimestamps();
     }
+    //Cambios 
 
     public function iglesia()
     {
