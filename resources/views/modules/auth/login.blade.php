@@ -21,7 +21,7 @@
                 <div class="card-body">
                   <center><img src="{{ asset('img/login.png') }}" alt="" class="img-fluid"></center>
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Ingresa tu email y contraseña para acceder</h5>
+                    <h5 class="card-title text-center pb-0 fs-4">Ingresa tu usuario y contraseña para acceder</h5>
                     
                   </div>
                   <form class="row g-3 needs-validation" novalidate method="POST" action="{{ route('logear') }}">
@@ -30,7 +30,7 @@
                       <label for="email" class="form-label">Usuario</label>
                       <div class="input-group has-validation">
                         <input type="text" name="email" class="form-control" id="email" required>
-                        <div class="invalid-feedback">Escribe tu correo</div>
+                        <div class="invalid-feedback">Escribe tu usuario</div>
                       </div>
                     </div>
                     <div class="col-12">
