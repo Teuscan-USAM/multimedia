@@ -22,7 +22,7 @@
               <label for="name">Nombre del usuario</label>
               <input type="text" class="form-control" required name="name" id="name" value="{{ $item->name }}">
 
-              <label for="email">Email</label>
+              <label for="email">Usuario</label>
               <input type="text" name="email" id="email" class="form-control" required value="{{ $item->email }}">
 
               <label for="rol">Rol de usuario</label>

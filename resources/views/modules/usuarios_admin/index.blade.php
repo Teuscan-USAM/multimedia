@@ -23,7 +23,7 @@
             <thead>
               <tr>
                 <th>Nombre</th>
-                <th>Email</th>
+                <th>Usuario</th>
                 <th>Rol</th>
                 <th>Activo</th>
                 <th class="text-end">Acciones</th>

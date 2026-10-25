@@ -97,27 +97,31 @@
   function cambio_password(){
     let id = $('#id_usuario').val();
     let password = $('#password').val();
+    let passwordConfirmation = $('#password_confirmation').val();
 
     $.ajax({
-      type: "GET",
-      url: "usuarios/cambiar-password/" + id + "/" + password,
+      type: "POST",
+      url: "{{ url('usuarios/reset-password') }}/" + id,
+      data: {
+        _token: $('input[name="_token"]', '#frmPassword').val(),
+        password: password,
+        password_confirmation: passwordConfirmation
+      },
       success :function(respuesta){
-        if(respuesta == 1){
-           Swal.fire({
-            title: 'Exito!',
-            text: 'Cambio de password exitoso!',
-            icon: 'success',
-            confirmButtonText:'Aceptar'
-          });
-          $('#frmPassword')[0].reset();
-        } else {
-          Swal.fire({
-            title: 'Fallo!',
-            text: 'Cambio de password no exitoso!',
-            icon: 'error',
-            confirmButtonText:'Aceptar'
-          });
-        }
+        Swal.fire({
+          title: 'Exito!',
+          text: 'Cambio de password exitoso!',
+          icon: 'success',
+          confirmButtonText:'Aceptar'
+        });
+        $('#frmPassword')[0].reset();
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('cambiar_password')).hide();
+      },
+      error: function(xhr) {
+        const mensaje = xhr.responseJSON && xhr.responseJSON.message
+          ? xhr.responseJSON.message
+          : 'No se pudo actualizar el password.';
+        Swal.fire('Fallo!', mensaje, 'error');
       }
     });
 

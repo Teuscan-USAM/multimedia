@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 class PerfilController extends Controller
 {
@@ -30,7 +31,7 @@ class PerfilController extends Controller
         // ✅ Validar campos
         $request->validate([
             'name'  => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $usuario->id,
+            'email' => 'required|string|max:255|unique:users,email,' . $usuario->id,
             'foto'  => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -62,5 +63,30 @@ class PerfilController extends Controller
         $usuario->save();
 
         return redirect()->route('perfil')->with('success', '✅ ¡Perfil actualizado correctamente!');
+    }
+
+    /**
+     * Actualizar la contraseña del usuario autenticado.
+     */
+    public function updatePassword(Request $request)
+    {
+        /** @var \App\Models\User $usuario */
+        $usuario = Auth::user();
+
+        $datos = $request->validateWithBag('password', [
+            'current_password' => 'required|string',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        if (!Hash::check($datos['current_password'], $usuario->password)) {
+            return back()
+                ->withErrors(['current_password' => 'La contraseña actual no es correcta.'], 'password')
+                ->withInput();
+        }
+
+        $usuario->password = Hash::make($datos['password']);
+        $usuario->save();
+
+        return redirect()->route('perfil')->with('success', '✅ ¡Contraseña actualizada correctamente!');
     }
 }

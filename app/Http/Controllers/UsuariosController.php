@@ -27,7 +27,7 @@ class UsuariosController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6',
             'rol' => 'required|in:admin,pastor,miembro',
             'iglesia_id' => 'required_if:rol,miembro|nullable|integer|exists:iglesias,id',
@@ -65,7 +65,7 @@ class UsuariosController extends Controller
         $item = User::findOrFail($id);
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => "required|email|unique:users,email,$id",
+            'email' => "required|string|max:255|unique:users,email,$id",
             'rol' => 'required|in:admin,pastor,miembro',
             'iglesia_id' => 'required_if:rol,miembro|nullable|integer|exists:iglesias,id',
             'iglesias' => 'array',
@@ -127,4 +127,3 @@ class UsuariosController extends Controller
         return back()->with('success', 'Iglesias asignadas con éxito.');
     }
 }
-

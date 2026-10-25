@@ -4,7 +4,7 @@
   <td>{{ $item->name }}</td>
   <td>{{ ucfirst($item->rol) }}</td>
   <td>
-      <a href="#" onclick="agregar_id_usuario({{ $item->id }})" 
+      <a href="#" onclick="agregar_id_usuario({{ $item->id }}); return false;"
           class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cambiar_password">
           <i class="fa-solid fa-user-lock"></i>
       </a>

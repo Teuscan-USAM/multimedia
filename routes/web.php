@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     // 👤 Perfil del usuario autenticado
     Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil');
     Route::post('/perfil/update', [PerfilController::class, 'update'])->name('perfil.update');
+    Route::post('/perfil/password', [PerfilController::class, 'updatePassword'])->name('perfil.password');
 
     Route::prefix('reportes')->group(function () {
         Route::get('/', [ReportesController::class, 'index'])->name('reportes.index');

@@ -44,8 +44,8 @@
           </div>
 
           <div class="mb-3">
-            <label for="email" class="form-label fw-semibold">Correo Electrónico</label>
-            <input type="email" name="email" id="email" class="form-control" 
+            <label for="email" class="form-label fw-semibold">Usuario</label>
+            <input type="text" name="email" id="email" class="form-control"
                    value="{{ old('email', $usuario->email) }}" readonly>
           </div>
 
@@ -65,6 +65,49 @@
           <div class="text-center">
             <button type="submit" class="btn btn-primary mt-3 px-4 py-2 rounded-pill">
               <i class="bi bi-save"></i> Actualizar Perfil
+            </button>
+          </div>
+        </form>
+
+        <hr class="my-4">
+
+        {{-- ✅ FORMULARIO DE CONTRASEÑA --}}
+        <h5 class="card-title text-center mb-3 fw-bold">Actualizar contraseña</h5>
+
+        @if($errors->password->any())
+          <div class="alert alert-danger">
+            <ul class="mb-0">
+              @foreach($errors->password->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
+
+        <form action="{{ route('perfil.password') }}" method="POST">
+          @csrf
+
+          <div class="mb-3">
+            <label for="current_password" class="form-label fw-semibold">Contraseña actual</label>
+            <input type="password" name="current_password" id="current_password"
+                   class="form-control" required autocomplete="current-password">
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label fw-semibold">Nueva contraseña</label>
+            <input type="password" name="password" id="password"
+                   class="form-control" required minlength="6" autocomplete="new-password">
+          </div>
+
+          <div class="mb-3">
+            <label for="password_confirmation" class="form-label fw-semibold">Confirmar nueva contraseña</label>
+            <input type="password" name="password_confirmation" id="password_confirmation"
+                   class="form-control" required minlength="6" autocomplete="new-password">
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-warning mt-2 px-4 py-2 rounded-pill">
+              <i class="bi bi-key"></i> Actualizar contraseña
             </button>
           </div>
         </form>

@@ -22,8 +22,8 @@
               <input name="name" class="form-control" value="{{ old('name') }}" required>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Email *</label>
-              <input name="email" type="email" class="form-control" value="{{ old('email') }}" required>
+              <label class="form-label">Usuario*</label>
+              <input name="email" type="text" class="form-control" value="{{ old('email') }}" required>
             </div>
             <div class="col-md-6">
               <label class="form-label">Contraseña *</label>
@@ -102,4 +102,3 @@
   actualizarIglesia();
 </script>
 @endpush
-

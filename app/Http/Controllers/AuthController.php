@@ -17,7 +17,7 @@ class AuthController extends Controller
     public function logear(Request $request) {
         //validar datos de las credenciales
         $credenciales = $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|string|max:255',
             'password' => 'required'
         ]);
 

@@ -2,6 +2,7 @@
   
   <!-- Modal -->
   <form id="frmPassword" onsubmit="return cambio_password()">
+    @csrf
     <div class="modal fade" id="cambiar_password" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -12,7 +13,10 @@
             <div class="modal-body">
                 <input type="text"  id="id_usuario" name="id_usuario" hidden>
                 <label for="password">Password nuevo</label>
-                <input type="password" name="password" id="password" class="form-control" required>
+                <input type="password" name="password" id="password" class="form-control" minlength="6" required>
+                <label for="password_confirmation" class="mt-3">Confirmar password nuevo</label>
+                <input type="password" name="password_confirmation" id="password_confirmation"
+                       class="form-control" minlength="6" required>
             </div>
             <div class="modal-footer">
               <span class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</span>
