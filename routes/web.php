@@ -13,6 +13,7 @@ use App\Http\Controllers\IngresosController;
 use App\Http\Controllers\EgresosController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\AnunciosController;
+use App\Http\Controllers\CampamentoController;
 use Illuminate\Support\Facades\Route;
 
 // Crear un usuario admin (solo usar una vez en un entorno nuevo)
@@ -23,6 +24,8 @@ Route::get('/', [InicioController::class, 'index'])->name('inicio.index');
 Route::get('/jovenes', [InicioController::class, 'jovenes'])->name('inicio.jovenes');
 Route::get('/escuela-dominical', [InicioController::class, 'escueladominical'])->name('inicio.escueladominical');
 Route::get('/anuncios/{anuncio}/imagen', ['App\\Http\\Controllers\\AnunciosController', 'image'])->name('anuncios.image');
+Route::get('/campamento', [CampamentoController::class, 'create'])->name('campamento.formulario');
+Route::post('/campamento', [CampamentoController::class, 'store'])->name('campamento.inscribir');
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/logear', [AuthController::class, 'logear'])->name('logear');
@@ -60,6 +63,13 @@ Route::middleware('auth')->group(function () {
 // 🏛️ Módulos del sistema de iglesias/finanzas
 // =====================================================
 Route::middleware(['auth', 'Checkrol:admin'])->group(function () {
+    Route::get('/campamento/inscripciones', [CampamentoController::class, 'index'])->name('campamento.index');
+    Route::get('/campamento/inscripciones/alergias/pdf', [CampamentoController::class, 'allergiesPdf'])->name('campamento.alergias.pdf');
+    Route::get('/campamento/inscripciones/{inscripcion}/editar', [CampamentoController::class, 'edit'])->name('campamento.edit');
+    Route::put('/campamento/inscripciones/{inscripcion}', [CampamentoController::class, 'update'])->name('campamento.update');
+    Route::delete('/campamento/inscripciones/{inscripcion}', [CampamentoController::class, 'destroy'])->name('campamento.destroy');
+    Route::get('/campamento/inscripciones/{inscripcion}', [CampamentoController::class, 'show'])->name('campamento.show');
+
     Route::get('/anuncios', ['App\\Http\\Controllers\\AnunciosController', 'index'])->name('anuncios.index');
     Route::get('/anuncios/create', ['App\\Http\\Controllers\\AnunciosController', 'create'])->name('anuncios.create');
     Route::get('/anuncios/escuela-dominical', ['App\\Http\\Controllers\\AnunciosController', 'escuelaDominical'])->name('anuncios.escuela.index');

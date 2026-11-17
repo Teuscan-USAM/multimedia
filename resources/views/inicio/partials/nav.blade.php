@@ -10,6 +10,7 @@
 
   <div class="nav-links" id="public-nav-links">
     <a class="nav-link {{ request()->routeIs('inicio.index') ? 'active' : '' }}" href="{{ route('inicio.index', [], false) }}">Inicio</a>
+    <a class="nav-link {{ request()->routeIs('campamento.formulario') ? 'active' : '' }}" href="{{ route('campamento.formulario', [], false) }}">Campamento</a>
 
     @php
       $isJovenesActive = request()->routeIs('inicio.jovenes');

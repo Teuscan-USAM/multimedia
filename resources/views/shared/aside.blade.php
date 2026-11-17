@@ -11,6 +11,11 @@
 
         @if(Auth::user()->rol === 'admin')
         <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('campamento.index', 'campamento.show') ? '' : 'collapsed' }}" href="{{ route('campamento.index') }}">
+                <i class="bi bi-person-vcard"></i><span>Inscripciones</span>
+            </a>
+        </li>
+        <li class="nav-item">
             @php($anunciosActivo = request()->routeIs('anuncios.index', 'anuncios.create', 'anuncios.escuela.index', 'anuncios.escuela.create'))
             <a class="nav-link {{ $anunciosActivo ? '' : 'collapsed' }}" data-bs-target="#anuncios-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-megaphone"></i><span>Anuncios</span>
