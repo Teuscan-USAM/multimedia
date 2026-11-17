@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\CampamentoInscripcion;
 use App\Models\CtlDepartamento;
-use App\Models\CtlMunicipio;
 use App\Models\CtlDistrito;
 use App\Models\DepartamentoCatalogo;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -60,7 +59,6 @@ class CampamentoController extends Controller
             'sexo' => ['required', 'string', 'in:Femenino,Masculino,Otro'],
             'telefono' => ['required', 'string', 'max:40'],
             'departamento_id' => ['required', 'integer', 'exists:ctl_departamento,id_departamento'],
-            'municipio_id' => ['required', 'integer', 'exists:ctl_municipio,id_municipio'],
             'distrito_id' => ['required', 'integer', 'exists:ctl_distrito,id_distrito'],
             'pertenece_iglesia' => ['required', 'boolean'],
             'iglesia' => ['nullable', 'required_if:pertenece_iglesia,1', 'string', 'max:255'],
@@ -74,7 +72,7 @@ class CampamentoController extends Controller
 
         $this->validateTerritorialSelection($data);
 
-        unset($data['departamento_id'], $data['municipio_id']);
+        unset($data['departamento_id']);
 
         if (! $data['pertenece_iglesia']) {
             $data['iglesia'] = null;
@@ -169,7 +167,6 @@ class CampamentoController extends Controller
             'sexo' => ['required', 'string', 'in:Femenino,Masculino,Otro'],
             'telefono' => ['required', 'string', 'max:40'],
             'departamento_id' => ['required', 'integer', 'exists:ctl_departamento,id_departamento'],
-            'municipio_id' => ['required', 'integer', 'exists:ctl_municipio,id_municipio'],
             'distrito_id' => ['required', 'integer', 'exists:ctl_distrito,id_distrito'],
             'pertenece_iglesia' => ['required', 'boolean'],
             'iglesia' => ['nullable', 'required_if:pertenece_iglesia,1', 'string', 'max:255'],
@@ -183,7 +180,7 @@ class CampamentoController extends Controller
 
         $this->validateTerritorialSelection($data);
 
-        unset($data['departamento_id'], $data['municipio_id']);
+        unset($data['departamento_id']);
         if (! $data['pertenece_iglesia']) {
             $data['iglesia'] = null;
             $data['departamento_catalogo_id'] = null;
@@ -208,18 +205,16 @@ class CampamentoController extends Controller
 
     private function validateTerritorialSelection(array $data): void
     {
-        $municipioPertenece = CtlMunicipio::query()
-            ->where('id_municipio', $data['municipio_id'])
-            ->where('id_departamento', $data['departamento_id'])
-            ->exists();
         $distritoPertenece = CtlDistrito::query()
             ->where('id_distrito', $data['distrito_id'])
-            ->where('id_municipio', $data['municipio_id'])
+            ->whereHas('municipio', function ($query) use ($data): void {
+                $query->where('id_departamento', $data['departamento_id']);
+            })
             ->exists();
 
-        if (! $municipioPertenece || ! $distritoPertenece) {
+        if (! $distritoPertenece) {
             throw ValidationException::withMessages([
-                'distrito_id' => 'El distrito seleccionado no pertenece al municipio y departamento indicados.',
+                'distrito_id' => 'El distrito seleccionado no pertenece al departamento indicado.',
             ]);
         }
     }

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ $editando ? 'Editar inscripción' : 'Inscripción al campamento' }}</title>
-  <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+  <link rel="icon" href="{{ asset('img/login.ico') }}" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root { --ink:#17251f; --muted:#66736d; --green:#1f5c48; --cream:#f7f5ef; --line:#dfe5df; }
@@ -69,13 +69,12 @@
           <div><label for="sexo">Sexo <span>*</span></label><select id="sexo" name="sexo" required><option value="">Selecciona una opción</option><option {{ old('sexo', $inscripcion?->sexo) === 'Femenino' ? 'selected' : '' }}>Femenino</option><option {{ old('sexo', $inscripcion?->sexo) === 'Masculino' ? 'selected' : '' }}>Masculino</option><option {{ old('sexo', $inscripcion?->sexo) === 'Otro' ? 'selected' : '' }}>Otro</option></select>@error('sexo')<div class="error">{{ $message }}</div>@enderror</div>
           <div><label for="telefono">Teléfono o WhatsApp <span>*</span></label><input id="telefono" name="telefono" value="{{ old('telefono', $inscripcion?->telefono) }}" required>@error('telefono')<div class="error">{{ $message }}</div>@enderror</div>
           <div><label for="departamento_id">Departamento de residencia <span>*</span></label><select id="departamento_id" name="departamento_id" required><option value="">Selecciona un departamento</option></select>@error('departamento_id')<div class="error">{{ $message }}</div>@enderror</div>
-          <div><label for="municipio_id">Municipio de residencia <span>*</span></label><select id="municipio_id" name="municipio_id" required disabled><option value="">Selecciona primero un departamento</option></select>@error('municipio_id')<div class="error">{{ $message }}</div>@enderror</div>
-          <div><label for="distrito_id">Distrito de residencia <span>*</span></label><select id="distrito_id" name="distrito_id" required disabled><option value="">Selecciona primero un municipio</option></select>@error('distrito_id')<div class="error">{{ $message }}</div>@enderror</div>
+          <div><label for="distrito_id">Distrito de residencia <span>*</span></label><select id="distrito_id" name="distrito_id" required disabled><option value="">Selecciona primero un departamento</option></select>@error('distrito_id')<div class="error">{{ $message }}</div>@enderror</div>
           <div class="full"><label>¿Perteneces a una iglesia? <span>*</span></label><div class="choice"><label><input type="radio" name="pertenece_iglesia" value="1" {{ old('pertenece_iglesia', $inscripcion ? ($inscripcion->pertenece_iglesia ? '1' : '0') : '1') === '1' ? 'checked' : '' }} required> Sí</label><label><input type="radio" name="pertenece_iglesia" value="0" {{ old('pertenece_iglesia', $inscripcion ? ($inscripcion->pertenece_iglesia ? '1' : '0') : '1') === '0' ? 'checked' : '' }}> No</label></div><div class="client-error error" data-for="pertenece_iglesia"></div>@error('pertenece_iglesia')<div class="error">{{ $message }}</div>@enderror</div>
           <div id="iglesia-fields" class="full" hidden>
             <div class="grid">
               <div><label for="iglesia">Nombre de la iglesia <span>*</span></label><input id="iglesia" name="iglesia" value="{{ old('iglesia', $inscripcion?->iglesia) }}">@error('iglesia')<div class="error">{{ $message }}</div>@enderror</div>
-              <div><label for="departamento_catalogo_id">¿A qué departamento pertenece? <span>*</span></label><select id="departamento_catalogo_id" name="departamento_catalogo_id"><option value="">Selecciona una opción</option>@foreach($departamentosCatalogo as $departamento)<option value="{{ $departamento->id }}" {{ (string) old('departamento_catalogo_id', $inscripcion?->departamento_catalogo_id) === (string) $departamento->id ? 'selected' : '' }}>{{ $departamento->nombre }}</option>@endforeach</select>@error('departamento_catalogo_id')<div class="error">{{ $message }}</div>@enderror</div>
+              <div><label for="departamento_catalogo_id">¿A qué ministerio perteneces? <span>*</span></label><select id="departamento_catalogo_id" name="departamento_catalogo_id"><option value="">Selecciona una opción</option>@foreach($departamentosCatalogo as $departamento)<option value="{{ $departamento->id }}" {{ (string) old('departamento_catalogo_id', $inscripcion?->departamento_catalogo_id) === (string) $departamento->id ? 'selected' : '' }}>{{ $departamento->nombre }}</option>@endforeach</select>@error('departamento_catalogo_id')<div class="error">{{ $message }}</div>@enderror</div>
             </div>
           </div>
           <div class="full"><label>¿Es la primera vez que participa en un campamento? <span>*</span></label><div class="choice"><label><input type="radio" name="primera_vez" value="1" {{ old('primera_vez') === '1' ? 'checked' : '' }} required> Sí</label><label><input type="radio" name="primera_vez" value="0" {{ old('primera_vez') === '0' ? 'checked' : '' }}> No</label></div><div class="client-error error" data-for="primera_vez"></div>@error('primera_vez')<div class="error">{{ $message }}</div>@enderror</div>
@@ -103,10 +102,8 @@
     (() => {
       const departamentosTerritoriales = @json($departamentosTerritoriales);
       const departamentoSelect = document.getElementById('departamento_id');
-      const municipioSelect = document.getElementById('municipio_id');
       const distritoSelect = document.getElementById('distrito_id');
       const departamentoInicial = @json(old('departamento_id', $inscripcion?->distrito?->municipio?->id_departamento));
-      const municipioInicial = @json(old('municipio_id', $inscripcion?->distrito?->id_municipio));
       const distritoInicial = @json(old('distrito_id', $inscripcion?->distrito_id));
 
       const llenarSelect = (select, items, placeholder, idKey, nameKey, selected = '') => {
@@ -118,26 +115,16 @@
         select.disabled = items.length === 0;
       };
 
-      const actualizarMunicipios = (selected = '', distritoSeleccionado = '') => {
-        const departamento = departamentosTerritoriales.find(item => String(item.id_departamento) === String(departamentoSelect.value));
-        const municipios = departamento?.municipios ?? [];
-
-        llenarSelect(municipioSelect, municipios, 'Selecciona un municipio', 'id_municipio', 'nombre', selected);
-        actualizarDistritos(distritoSeleccionado);
-      };
-
       const actualizarDistritos = (selected = '') => {
         const departamento = departamentosTerritoriales.find(item => String(item.id_departamento) === String(departamentoSelect.value));
-        const municipio = departamento?.municipios?.find(item => String(item.id_municipio) === String(municipioSelect.value));
-        const distritos = municipio?.distritos ?? [];
+        const distritos = (departamento?.municipios ?? []).flatMap(municipio => municipio.distritos ?? []);
 
         llenarSelect(distritoSelect, distritos, 'Selecciona un distrito', 'id_distrito', 'nombre', selected);
       };
 
       llenarSelect(departamentoSelect, departamentosTerritoriales, 'Selecciona un departamento', 'id_departamento', 'nombre', departamentoInicial);
-      departamentoSelect.addEventListener('change', () => actualizarMunicipios());
-      municipioSelect.addEventListener('change', () => actualizarDistritos());
-      actualizarMunicipios(municipioInicial, distritoInicial);
+      departamentoSelect.addEventListener('change', () => actualizarDistritos());
+      actualizarDistritos(distritoInicial);
 
       const toggleFields = (name, containerId, requiredFields) => {
         const fields = document.getElementById(containerId);
