@@ -56,7 +56,7 @@ class CampamentoController extends Controller
                     }
                 },
             ],
-            'sexo' => ['required', 'string', 'in:Femenino,Masculino,Otro'],
+            'sexo' => ['required', 'string', 'in:Femenino,Masculino'],
             'telefono' => ['required', 'string', 'max:40'],
             'departamento_id' => ['required', 'integer', 'exists:ctl_departamento,id_departamento'],
             'distrito_id' => ['required', 'integer', 'exists:ctl_distrito,id_distrito'],
@@ -165,7 +165,7 @@ class CampamentoController extends Controller
                     }
                 },
             ],
-            'sexo' => ['required', 'string', 'in:Femenino,Masculino,Otro'],
+            'sexo' => ['required', 'string', 'in:Femenino,Masculino'],
             'telefono' => ['required', 'string', 'max:40'],
             'departamento_id' => ['required', 'integer', 'exists:ctl_departamento,id_departamento'],
             'distrito_id' => ['required', 'integer', 'exists:ctl_distrito,id_distrito'],

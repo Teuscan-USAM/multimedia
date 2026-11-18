@@ -36,7 +36,7 @@
     @if(session('success'))
       <section class="success-screen" aria-labelledby="success-title">
         <div class="success-card">
-          <h1 id="success-title">¡Felcidades te esperamos en nuestro campamento!</h1>
+          <h1 id="success-title">¡Felicidades te esperamos en nuestro campamento!</h1>
           <p>{{ session('success') }}</p>
           <a href="{{ route('campamento.formulario') }}">Volver a ficha de inscripción</a>
         </div>
@@ -66,7 +66,7 @@
           <div class="full"><label for="nombre_completo">Nombre completo <span>*</span></label><input id="nombre_completo" name="nombre_completo" value="{{ old('nombre_completo', $inscripcion?->nombre_completo) }}" required>@error('nombre_completo')<div class="error">{{ $message }}</div>@enderror</div>
           <div><label for="fecha_nacimiento">Fecha de nacimiento <span>*</span></label><input id="fecha_nacimiento" type="date" name="fecha_nacimiento" value="{{ old('fecha_nacimiento', $inscripcion?->fecha_nacimiento?->format('Y-m-d')) }}" max="{{ now()->format('Y-m-d') }}" required>@error('fecha_nacimiento')<div class="error">{{ $message }}</div>@enderror</div>
           <div><label for="edad">Edad <span>*</span></label><input id="edad" type="number" name="edad" value="{{ old('edad', $inscripcion?->edad) }}" min="0" max="120" required><div id="edad-client-error" class="client-error error"></div>@error('edad')<div class="error">{{ $message }}</div>@enderror</div>
-          <div><label for="sexo">Sexo <span>*</span></label><select id="sexo" name="sexo" required><option value="">Selecciona una opción</option><option {{ old('sexo', $inscripcion?->sexo) === 'Femenino' ? 'selected' : '' }}>Femenino</option><option {{ old('sexo', $inscripcion?->sexo) === 'Masculino' ? 'selected' : '' }}>Masculino</option><option {{ old('sexo', $inscripcion?->sexo) === 'Otro' ? 'selected' : '' }}>Otro</option></select>@error('sexo')<div class="error">{{ $message }}</div>@enderror</div>
+          <div><label for="sexo">Sexo <span>*</span></label><select id="sexo" name="sexo" required><option value="">Selecciona una opción</option><option value="Femenino" {{ old('sexo', $inscripcion?->sexo) === 'Femenino' ? 'selected' : '' }}>Femenino</option><option value="Masculino" {{ old('sexo', $inscripcion?->sexo) === 'Masculino' ? 'selected' : '' }}>Masculino</option></select>@error('sexo')<div class="error">{{ $message }}</div>@enderror</div>
           <div><label for="telefono">Teléfono o WhatsApp <span>*</span></label><input id="telefono" name="telefono" value="{{ old('telefono', $inscripcion?->telefono) }}" required>@error('telefono')<div class="error">{{ $message }}</div>@enderror</div>
           <div><label for="departamento_id">Departamento de residencia <span>*</span></label><select id="departamento_id" name="departamento_id" required><option value="">Selecciona un departamento</option></select>@error('departamento_id')<div class="error">{{ $message }}</div>@enderror</div>
           <div><label for="distrito_id">Distrito de residencia <span>*</span></label><select id="distrito_id" name="distrito_id" required disabled><option value="">Selecciona primero un departamento</option></select>@error('distrito_id')<div class="error">{{ $message }}</div>@enderror</div>
@@ -74,7 +74,13 @@
           <div id="iglesia-fields" class="full" hidden>
             <div class="grid">
               <div><label for="iglesia">Nombre de la iglesia <span>*</span></label><input id="iglesia" name="iglesia" value="{{ old('iglesia', $inscripcion?->iglesia) }}">@error('iglesia')<div class="error">{{ $message }}</div>@enderror</div>
-              <div><label for="departamento_catalogo_id">¿A qué ministerio perteneces? <span>*</span></label><select id="departamento_catalogo_id" name="departamento_catalogo_id"><option value="">Selecciona una opción</option>@foreach($departamentosCatalogo as $departamento)<option value="{{ $departamento->id }}" {{ (string) old('departamento_catalogo_id', $inscripcion?->departamento_catalogo_id) === (string) $departamento->id ? 'selected' : '' }}>{{ $departamento->nombre }}</option>@endforeach</select>@error('departamento_catalogo_id')<div class="error">{{ $message }}</div>@enderror</div>
+              <div><label for="departamento_catalogo_id">¿A qué ministerio perteneces              cd ~/domains/asambleaselsalvador.com
+              
+              readlink public_html
+              ls -la public_html
+              ls -la public_html/index.php laravel_core/public/index.php
+              curl -i -H "Host: asambleaselsalvador.com" http://127.0.0.1/
+              curl -i -H "Host: asambleaselsalvador.com" http://127.0.0.1/campamento? <span>*</span></label><select id="departamento_catalogo_id" name="departamento_catalogo_id"><option value="">Selecciona una opción</option>@foreach($departamentosCatalogo as $departamento)<option value="{{ $departamento->id }}" {{ (string) old('departamento_catalogo_id', $inscripcion?->departamento_catalogo_id) === (string) $departamento->id ? 'selected' : '' }}>{{ $departamento->nombre }}</option>@endforeach</select>@error('departamento_catalogo_id')<div class="error">{{ $message }}</div>@enderror</div>
             </div>
           </div>
           <div class="full"><label>¿Es la primera vez que participa en un campamento? <span>*</span></label><div class="choice"><label><input type="radio" name="primera_vez" value="1" {{ old('primera_vez') === '1' ? 'checked' : '' }} required> Sí</label><label><input type="radio" name="primera_vez" value="0" {{ old('primera_vez') === '0' ? 'checked' : '' }}> No</label></div><div class="client-error error" data-for="primera_vez"></div>@error('primera_vez')<div class="error">{{ $message }}</div>@enderror</div>
