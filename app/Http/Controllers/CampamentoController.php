@@ -111,6 +111,7 @@ class CampamentoController extends Controller
             'sinIglesia' => $inscripciones->where('pertenece_iglesia', false)->count(),
             'conAlergias' => $inscripciones->where('tiene_alergias', true)->count(),
             'sinAlergias' => $inscripciones->where('tiene_alergias', false)->count(),
+            'primeraVez' => $inscripciones->where('primera_vez', true)->count(),
             'inscritosPorDia' => $inscritosPorDia,
         ]);
     }

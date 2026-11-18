@@ -24,7 +24,7 @@
           ['label' => 'Asisten a una iglesia', 'value' => $conIglesia, 'class' => 'bg-success text-white', 'icon' => 'bi-building'],
           ['label' => 'No asisten a una iglesia', 'value' => $sinIglesia, 'class' => 'bg-secondary text-white', 'icon' => 'bi-building-slash'],
           ['label' => 'Con alergias', 'value' => $conAlergias, 'class' => 'bg-dark text-white', 'icon' => 'bi-exclamation-triangle'],
-          ['label' => 'Sin alergias', 'value' => $sinAlergias, 'class' => 'bg-light text-dark', 'icon' => 'bi-shield-check'],
+          ['label' => 'Primera vez', 'value' => $primeraVez, 'class' => 'bg-light text-dark', 'icon' => 'bi-person-plus'],
         ];
       @endphp
       @foreach($summaryCards as $card)
