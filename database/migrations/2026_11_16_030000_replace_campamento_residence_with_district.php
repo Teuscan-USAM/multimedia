@@ -11,7 +11,7 @@ return new class extends Migration
     {
         if (! Schema::hasColumn('campamento_inscripciones', 'distrito_id')) {
             Schema::table('campamento_inscripciones', function (Blueprint $table) {
-                $table->unsignedInteger('distrito_id')->nullable()->after('telefono');
+                $table->integer('distrito_id')->nullable()->after('telefono');
                 $table->foreign('distrito_id')
                     ->references('id_distrito')
                     ->on('ctl_distrito')
