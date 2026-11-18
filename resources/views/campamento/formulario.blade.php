@@ -74,13 +74,7 @@
           <div id="iglesia-fields" class="full" hidden>
             <div class="grid">
               <div><label for="iglesia">Nombre de la iglesia <span>*</span></label><input id="iglesia" name="iglesia" value="{{ old('iglesia', $inscripcion?->iglesia) }}">@error('iglesia')<div class="error">{{ $message }}</div>@enderror</div>
-              <div><label for="departamento_catalogo_id">¿A qué ministerio perteneces              cd ~/domains/asambleaselsalvador.com
-              
-              readlink public_html
-              ls -la public_html
-              ls -la public_html/index.php laravel_core/public/index.php
-              curl -i -H "Host: asambleaselsalvador.com" http://127.0.0.1/
-              curl -i -H "Host: asambleaselsalvador.com" http://127.0.0.1/campamento? <span>*</span></label><select id="departamento_catalogo_id" name="departamento_catalogo_id"><option value="">Selecciona una opción</option>@foreach($departamentosCatalogo as $departamento)<option value="{{ $departamento->id }}" {{ (string) old('departamento_catalogo_id', $inscripcion?->departamento_catalogo_id) === (string) $departamento->id ? 'selected' : '' }}>{{ $departamento->nombre }}</option>@endforeach</select>@error('departamento_catalogo_id')<div class="error">{{ $message }}</div>@enderror</div>
+              <div><label for="departamento_catalogo_id">¿A qué ministerio perteneces? <span>*</span></label><select id="departamento_catalogo_id" name="departamento_catalogo_id"><option value="">Selecciona una opción</option>@foreach($departamentosCatalogo as $departamento)<option value="{{ $departamento->id }}" {{ (string) old('departamento_catalogo_id', $inscripcion?->departamento_catalogo_id) === (string) $departamento->id ? 'selected' : '' }}>{{ $departamento->nombre }}</option>@endforeach</select>@error('departamento_catalogo_id')<div class="error">{{ $message }}</div>@enderror</div>
             </div>
           </div>
           <div class="full"><label>¿Es la primera vez que participa en un campamento? <span>*</span></label><div class="choice"><label><input type="radio" name="primera_vez" value="1" {{ old('primera_vez') === '1' ? 'checked' : '' }} required> Sí</label><label><input type="radio" name="primera_vez" value="0" {{ old('primera_vez') === '0' ? 'checked' : '' }}> No</label></div><div class="client-error error" data-for="primera_vez"></div>@error('primera_vez')<div class="error">{{ $message }}</div>@enderror</div>
